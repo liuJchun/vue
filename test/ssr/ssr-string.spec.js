@@ -542,7 +542,7 @@ describe('SSR: renderToString', () => {
     renderVmWithOptions({
       render: h => h(Foo)
     }, res => {
-      expect(res).toContain(`<div data-server-rendered="true"><span>foo</span><span>bar</span></div>`)
+      expect(res).toContain('<div data-server-rendered="true"><span>foo</span><span>bar</span></div>')
       done()
     })
   })
@@ -565,7 +565,7 @@ describe('SSR: renderToString', () => {
     renderVmWithOptions({
       render: h => h(Foo)
     }, res => {
-      expect(res).toContain(`<div data-server-rendered="true"><span>foo</span><span>bar</span></div>`)
+      expect(res).toContain('<div data-server-rendered="true"><span>foo</span><span>bar</span></div>')
       done()
     })
   })
@@ -929,7 +929,7 @@ describe('SSR: renderToString', () => {
     renderVmWithOptions({
       template: '<div><transition><div v-if="false"></div></transition></div>'
     }, result => {
-      expect(result).toContain(`<div data-server-rendered="true"><!----></div>`)
+      expect(result).toContain('<div data-server-rendered="true"><!----></div>')
       done()
     })
   })
@@ -975,7 +975,7 @@ describe('SSR: renderToString', () => {
         </div>
       `
     }, res => {
-      expect(res).not.toContain(`<script>alert(1)</script>`)
+      expect(res).not.toContain('<script>alert(1)</script>')
       done()
     })
   })
@@ -991,7 +991,7 @@ describe('SSR: renderToString', () => {
         <div v-bind="xss"></div>
       `
     }, res => {
-      expect(res).not.toContain(`<script>alert(1)</script>`)
+      expect(res).not.toContain('<script>alert(1)</script>')
       done()
     })
   })
@@ -1009,7 +1009,7 @@ describe('SSR: renderToString', () => {
         </div>
       `
     }, res => {
-      expect(res).not.toContain(`<script>alert(1)</script>`)
+      expect(res).not.toContain('<script>alert(1)</script>')
       done()
     })
   })
@@ -1019,9 +1019,9 @@ describe('SSR: renderToString', () => {
       data: {
         test: ['"><script>alert(1)</script><!--"']
       },
-      template: `<div v-bind="{ test }"></div>`
+      template: '<div v-bind="{ test }"></div>'
     }, res => {
-      expect(res).not.toContain(`<script>alert(1)</script>`)
+      expect(res).not.toContain('<script>alert(1)</script>')
       done()
     })
   })
@@ -1035,7 +1035,7 @@ describe('SSR: renderToString', () => {
         </div>
       `
     }, res => {
-      expect(res).toContain(`<div data-server-rendered="true"><span>foo</span> <!----></div>`)
+      expect(res).toContain('<div data-server-rendered="true"><span>foo</span> <!----></div>')
       done()
     })
   })
@@ -1049,7 +1049,7 @@ describe('SSR: renderToString', () => {
         </div>
       `
     }, res => {
-      expect(res).toContain(`<div data-server-rendered="true"><span>foo</span> <span>1</span><span>2</span></div>`)
+      expect(res).toContain('<div data-server-rendered="true"><span>foo</span> <span>1</span><span>2</span></div>')
       done()
     })
   })
@@ -1065,7 +1065,7 @@ describe('SSR: renderToString', () => {
         </div>
       `
     }, res => {
-      expect(res).toContain(`<div data-server-rendered="true"><span>foo</span> <span>foo</span> bar <span>baz</span></div>`)
+      expect(res).toContain('<div data-server-rendered="true"><span>foo</span> <span>foo</span> bar <span>baz</span></div>')
       done()
     })
   })
@@ -1081,38 +1081,38 @@ describe('SSR: renderToString', () => {
         </div>
       `
     }, res => {
-      expect(res).toContain(`<div data-server-rendered="true"><span>foo</span> <span>1</span><span>bar</span><span>2</span><span>bar</span></div>`)
+      expect(res).toContain('<div data-server-rendered="true"><span>foo</span> <span>1</span><span>bar</span><span>2</span><span>bar</span></div>')
       done()
     })
   })
 
   it('with inheritAttrs: false + $attrs', done => {
     renderVmWithOptions({
-      template: `<foo id="a"/>`,
+      template: '<foo id="a"/>',
       components: {
         foo: {
           inheritAttrs: false,
-          template: `<div><div v-bind="$attrs"></div></div>`
+          template: '<div><div v-bind="$attrs"></div></div>'
         }
       }
     }, res => {
-      expect(res).toBe(`<div data-server-rendered="true"><div id="a"></div></div>`)
+      expect(res).toBe('<div data-server-rendered="true"><div id="a"></div></div>')
       done()
     })
   })
 
   it('should escape static strings', done => {
     renderVmWithOptions({
-      template: `<div>&lt;foo&gt;</div>`
+      template: '<div>&lt;foo&gt;</div>'
     }, res => {
-      expect(res).toBe(`<div data-server-rendered="true">&lt;foo&gt;</div>`)
+      expect(res).toBe('<div data-server-rendered="true">&lt;foo&gt;</div>')
       done()
     })
   })
 
   it('should not cache computed properties', done => {
     renderVmWithOptions({
-      template: `<div>{{ foo }}</div>`,
+      template: '<div>{{ foo }}</div>',
       data: () => ({ bar: 1 }),
       computed: {
         foo () { return this.bar + 1 }
@@ -1122,7 +1122,7 @@ describe('SSR: renderToString', () => {
         this.bar++ // trigger change
       }
     }, res => {
-      expect(res).toBe(`<div data-server-rendered="true">3</div>`)
+      expect(res).toBe('<div data-server-rendered="true">3</div>')
       done()
     })
   })
@@ -1147,10 +1147,10 @@ describe('SSR: renderToString', () => {
 
   it('return Promise', done => {
     renderToString(new Vue({
-      template: `<div>{{ foo }}</div>`,
+      template: '<div>{{ foo }}</div>',
       data: { foo: 'bar' }
     })).then(res => {
-      expect(res).toBe(`<div data-server-rendered="true">bar</div>`)
+      expect(res).toBe('<div data-server-rendered="true">bar</div>')
       done()
     })
   })
@@ -1162,7 +1162,7 @@ describe('SSR: renderToString', () => {
         throw new Error('foobar')
       }
     })).catch(err => {
-      expect(err.toString()).toContain(`foobar`)
+      expect(err.toString()).toContain('foobar')
       Vue.config.silent = false
       done()
     })
@@ -1170,7 +1170,7 @@ describe('SSR: renderToString', () => {
 
   it('should catch template compilation error', done => {
     renderToString(new Vue({
-      template: `<div></div><div></div>`
+      template: '<div></div><div></div>'
     }), (err) => {
       expect(err.toString()).toContain('Component template should contain exactly one root element')
       done()
@@ -1181,9 +1181,9 @@ describe('SSR: renderToString', () => {
   it('should not optimize root if conditions', done => {
     renderVmWithOptions({
       data: { foo: 123 },
-      template: `<input :type="'text'" v-model="foo">`
+      template: '<input :type="\'text\'" v-model="foo">'
     }, res => {
-      expect(res).toBe(`<input type="text" data-server-rendered="true" value="123">`)
+      expect(res).toBe('<input type="text" data-server-rendered="true" value="123">')
       done()
     })
   })
@@ -1309,7 +1309,7 @@ describe('SSR: renderToString', () => {
       </div>
       `
     }, result => {
-      expect(result).toContain(`<div id="a\nb"></div>`)
+      expect(result).toContain('<div id="a\nb"></div>')
       done()
     })
   })
@@ -1323,7 +1323,7 @@ describe('SSR: renderToString', () => {
       </div>
       `
     }, result => {
-      expect(result).toContain(`<div class="a\nb"></div>`)
+      expect(result).toContain('<div class="a\nb"></div>')
       done()
     })
   })
@@ -1331,7 +1331,7 @@ describe('SSR: renderToString', () => {
   it('should expose ssr helpers on functional context', done => {
     let called = false
     renderVmWithOptions({
-      template: `<div><foo/></div>`,
+      template: '<div><foo/></div>',
       components: {
         foo: {
           functional: true,
@@ -1500,7 +1500,7 @@ describe('SSR: renderToString', () => {
     })
   })
 
-  it(`should skip serverPrefetch option that doesn't return a promise`, done => {
+  it('should skip serverPrefetch option that doesn\'t return a promise', done => {
     renderVmWithOptions({
       template: `
         <div>{{ count }}</div>
@@ -1616,13 +1616,13 @@ describe('SSR: renderToString', () => {
 
   it('Options inheritAttrs in parent component', done => {
     const childComponent = {
-      template: `<div>{{ someProp }}</div>`,
+      template: '<div>{{ someProp }}</div>',
       props: {
         someProp: {}
       },
     }
     const parentComponent = {
-      template: `<childComponent v-bind="$attrs" />`,
+      template: '<childComponent v-bind="$attrs" />',
       components: { childComponent },
       inheritAttrs: false
     }

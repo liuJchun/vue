@@ -216,7 +216,7 @@ describe('Options lifecycle hooks', () => {
         data: { msg: 'foo' },
         components: {
           test: {
-            template: `<div><slot></slot></div>`,
+            template: '<div><slot></slot></div>',
             updated () {
               expect(this.$el.textContent).toBe('bar')
               calls.push('child')

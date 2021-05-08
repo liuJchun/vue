@@ -17,7 +17,7 @@ function preTransformNode (el: ASTElement) {
 }
 
 function genData (el: ASTElement): string {
-  return el.appendAsTree ? `appendAsTree:true,` : ''
+  return el.appendAsTree ? 'appendAsTree:true,' : ''
 }
 
 export default {

@@ -24,7 +24,7 @@ export function parseTemplate (
   const j = template.indexOf(contentPlaceholder)
 
   if (j < 0) {
-    throw new Error(`Content placeholder not found in template.`)
+    throw new Error('Content placeholder not found in template.')
   }
 
   if (i < 0) {

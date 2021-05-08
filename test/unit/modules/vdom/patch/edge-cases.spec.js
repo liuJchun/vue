@@ -233,13 +233,13 @@ describe('vdom patch: edge cases', () => {
 
   it('should properly patch nested HOC when root element is replaced', done => {
     const vm = new Vue({
-      template: `<foo class="hello" ref="foo" />`,
+      template: '<foo class="hello" ref="foo" />',
       components: {
         foo: {
-          template: `<bar ref="bar" />`,
+          template: '<bar ref="bar" />',
           components: {
             bar: {
-              template: `<div v-if="ok"></div><span v-else></span>`,
+              template: '<div v-if="ok"></div><span v-else></span>',
               data () {
                 return { ok: true }
               }
@@ -250,19 +250,19 @@ describe('vdom patch: edge cases', () => {
     }).$mount()
 
     expect(vm.$refs.foo.$refs.bar.$el.tagName).toBe('DIV')
-    expect(vm.$refs.foo.$refs.bar.$el.className).toBe(`hello`)
+    expect(vm.$refs.foo.$refs.bar.$el.className).toBe('hello')
 
     vm.$refs.foo.$refs.bar.ok = false
     waitForUpdate(() => {
       expect(vm.$refs.foo.$refs.bar.$el.tagName).toBe('SPAN')
-      expect(vm.$refs.foo.$refs.bar.$el.className).toBe(`hello`)
+      expect(vm.$refs.foo.$refs.bar.$el.className).toBe('hello')
     }).then(done)
   })
 
   // #6790
   it('should not render undefined for empty nested arrays', () => {
     const vm = new Vue({
-      template: `<div><template v-for="i in emptyArr"></template></div>`,
+      template: '<div><template v-for="i in emptyArr"></template></div>',
       data: { emptyArr: [] }
     }).$mount()
     expect(vm.$el.textContent).toBe('')
@@ -367,7 +367,7 @@ describe('vdom patch: edge cases', () => {
   it('should not special-case boolean attributes for custom elements', () => {
     Vue.config.ignoredElements = [/^custom-/]
     const vm = new Vue({
-      template: `<div><custom-foo selected="1"/></div>`
+      template: '<div><custom-foo selected="1"/></div>'
     }).$mount()
     expect(vm.$el.querySelector('custom-foo').getAttribute('selected')).toBe('1')
     Vue.config.ignoredElements = []

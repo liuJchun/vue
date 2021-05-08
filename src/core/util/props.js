@@ -170,8 +170,8 @@ function assertType (value: any, type: Function, vm: ?Component): {
     try {
       valid = value instanceof type
     } catch (e) {
-      warn('Invalid prop type: "' + String(type) + '" is not a constructor', vm);
-      valid = false;
+      warn('Invalid prop type: "' + String(type) + '" is not a constructor', vm)
+      valid = false
     }
   }
   return {

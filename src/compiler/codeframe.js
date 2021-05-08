@@ -15,17 +15,17 @@ export function generateCodeFrame (
     if (count >= start) {
       for (let j = i - range; j <= i + range || end > count; j++) {
         if (j < 0 || j >= lines.length) continue
-        res.push(`${j + 1}${repeat(` `, 3 - String(j + 1).length)}|  ${lines[j]}`)
+        res.push(`${j + 1}${repeat(' ', 3 - String(j + 1).length)}|  ${lines[j]}`)
         const lineLength = lines[j].length
         if (j === i) {
           // push underline
           const pad = start - (count - lineLength) + 1
           const length = end > count ? lineLength - pad : end - start
-          res.push(`   |  ` + repeat(` `, pad) + repeat(`^`, length))
+          res.push('   |  ' + repeat(' ', pad) + repeat('^', length))
         } else if (j > i) {
           if (end > count) {
             const length = Math.min(end - count, lineLength)
-            res.push(`   |  ` + repeat(`^`, length))
+            res.push('   |  ' + repeat('^', length))
           }
           count += lineLength + 1
         }

@@ -44,7 +44,7 @@ const invalidAttributeRE = /[\s"'<>\/=]/
 
 const decodeHTMLCached = cached(he.decode)
 
-export const emptySlotScopeToken = `_empty_`
+export const emptySlotScopeToken = '_empty_'
 
 // configurable state
 export let warn: any
@@ -132,9 +132,9 @@ export function parse (
         })
       } else if (process.env.NODE_ENV !== 'production') {
         warnOnce(
-          `Component template should contain exactly one root element. ` +
-          `If you are using v-if on multiple elements, ` +
-          `use v-else-if to chain them instead.`,
+          'Component template should contain exactly one root element. ' +
+          'If you are using v-if on multiple elements, ' +
+          'use v-else-if to chain them instead.',
           { start: element.start }
         )
       }
@@ -242,10 +242,10 @@ export function parse (
         attrs.forEach(attr => {
           if (invalidAttributeRE.test(attr.name)) {
             warn(
-              `Invalid dynamic argument expression: attribute names cannot contain ` +
-              `spaces, quotes, <, >, / or =.`,
+              'Invalid dynamic argument expression: attribute names cannot contain ' +
+              'spaces, quotes, <, >, / or =.',
               {
-                start: attr.start + attr.name.indexOf(`[`),
+                start: attr.start + attr.name.indexOf('['),
                 end: attr.start + attr.name.length
               }
             )
@@ -461,7 +461,7 @@ function processKey (el) {
     if (process.env.NODE_ENV !== 'production') {
       if (el.tag === 'template') {
         warn(
-          `<template> cannot be keyed. Place the key on real elements instead.`,
+          '<template> cannot be keyed. Place the key on real elements instead.',
           getRawBindingAttr(el, 'key')
         )
       }
@@ -470,8 +470,8 @@ function processKey (el) {
         const parent = el.parent
         if (iterator && iterator === exp && parent && parent.tag === 'transition-group') {
           warn(
-            `Do not use v-for index as key on <transition-group> children, ` +
-            `this is the same as not using keys.`,
+            'Do not use v-for index as key on <transition-group> children, ' +
+            'this is the same as not using keys.',
             getRawBindingAttr(el, 'key'),
             true /* tip */
           )
@@ -575,7 +575,7 @@ function findPrevElement (children: Array<any>): ASTElement | void {
       if (process.env.NODE_ENV !== 'production' && children[i].text !== ' ') {
         warn(
           `text "${children[i].text.trim()}" between v-if and v-else(-if) ` +
-          `will be ignored.`,
+          'will be ignored.',
           children[i]
         )
       }
@@ -607,10 +607,10 @@ function processSlotContent (el) {
     /* istanbul ignore if */
     if (process.env.NODE_ENV !== 'production' && slotScope) {
       warn(
-        `the "scope" attribute for scoped slots have been deprecated and ` +
-        `replaced by "slot-scope" since 2.5. The new "slot-scope" attribute ` +
-        `can also be used on plain elements in addition to <template> to ` +
-        `denote scoped slots.`,
+        'the "scope" attribute for scoped slots have been deprecated and ' +
+        'replaced by "slot-scope" since 2.5. The new "slot-scope" attribute ' +
+        'can also be used on plain elements in addition to <template> to ' +
+        'denote scoped slots.',
         el.rawAttrsMap['scope'],
         true
       )
@@ -621,8 +621,8 @@ function processSlotContent (el) {
     if (process.env.NODE_ENV !== 'production' && el.attrsMap['v-for']) {
       warn(
         `Ambiguous combined usage of slot-scope and v-for on <${el.tag}> ` +
-        `(v-for takes higher priority). Use a wrapper <template> for the ` +
-        `scoped slot to make it clearer.`,
+        '(v-for takes higher priority). Use a wrapper <template> for the ' +
+        'scoped slot to make it clearer.',
         el.rawAttrsMap['slot-scope'],
         true
       )
@@ -651,14 +651,14 @@ function processSlotContent (el) {
         if (process.env.NODE_ENV !== 'production') {
           if (el.slotTarget || el.slotScope) {
             warn(
-              `Unexpected mixed usage of different slot syntaxes.`,
+              'Unexpected mixed usage of different slot syntaxes.',
               el
             )
           }
           if (el.parent && !maybeComponent(el.parent)) {
             warn(
-              `<template v-slot> can only appear at the root level inside ` +
-              `the receiving component`,
+              '<template v-slot> can only appear at the root level inside ' +
+              'the receiving component',
               el
             )
           }
@@ -675,20 +675,20 @@ function processSlotContent (el) {
         if (process.env.NODE_ENV !== 'production') {
           if (!maybeComponent(el)) {
             warn(
-              `v-slot can only be used on components or <template>.`,
+              'v-slot can only be used on components or <template>.',
               slotBinding
             )
           }
           if (el.slotScope || el.slotTarget) {
             warn(
-              `Unexpected mixed usage of different slot syntaxes.`,
+              'Unexpected mixed usage of different slot syntaxes.',
               el
             )
           }
           if (el.scopedSlots) {
             warn(
-              `To avoid scope ambiguity, the default slot should also use ` +
-              `<template> syntax when there are other named slots.`,
+              'To avoid scope ambiguity, the default slot should also use ' +
+              '<template> syntax when there are other named slots.',
               slotBinding
             )
           }
@@ -722,7 +722,7 @@ function getSlotName (binding) {
       name = 'default'
     } else if (process.env.NODE_ENV !== 'production') {
       warn(
-        `v-slot shorthand syntax requires a slot name.`,
+        'v-slot shorthand syntax requires a slot name.',
         binding
       )
     }
@@ -740,9 +740,9 @@ function processSlotOutlet (el) {
     el.slotName = getBindingAttr(el, 'name')
     if (process.env.NODE_ENV !== 'production' && el.key) {
       warn(
-        `\`key\` does not work on <slot> because slots are abstract outlets ` +
-        `and can possibly expand into multiple elements. ` +
-        `Use the key on a wrapping element instead.`,
+        '`key` does not work on <slot> because slots are abstract outlets ' +
+        'and can possibly expand into multiple elements. ' +
+        'Use the key on a wrapping element instead.',
         getRawBindingAttr(el, 'key')
       )
     }
@@ -773,7 +773,7 @@ function processAttrs (el) {
       // support .foo shorthand syntax for the .prop modifier
       if (process.env.VBIND_PROP_SHORTHAND && propBindRE.test(name)) {
         (modifiers || (modifiers = {})).prop = true
-        name = `.` + name.slice(1).replace(modifierRE, '')
+        name = '.' + name.slice(1).replace(modifierRE, '')
       } else if (modifiers) {
         name = name.replace(modifierRE, '')
       }
@@ -801,7 +801,7 @@ function processAttrs (el) {
             name = camelize(name)
           }
           if (modifiers.sync) {
-            syncGen = genAssignmentCode(value, `$event`)
+            syncGen = genAssignmentCode(value, '$event')
             if (!isDynamic) {
               addHandler(
                 el,
@@ -967,10 +967,10 @@ function checkForAliasModel (el, value) {
     if (_el.for && _el.alias === value) {
       warn(
         `<${el.tag} v-model="${value}">: ` +
-        `You are binding v-model directly to a v-for iteration alias. ` +
-        `This will not be able to modify the v-for source array because ` +
-        `writing to the alias is like modifying a function local variable. ` +
-        `Consider using an array of objects and use v-model on an object property instead.`,
+        'You are binding v-model directly to a v-for iteration alias. ' +
+        'This will not be able to modify the v-for source array because ' +
+        'writing to the alias is like modifying a function local variable. ' +
+        'Consider using an array of objects and use v-model on an object property instead.',
         el.rawAttrsMap['v-model']
       )
     }

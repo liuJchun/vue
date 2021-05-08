@@ -89,9 +89,9 @@ function initProps (vm: Component, propsOptions: Object) {
       defineReactive(props, key, value, () => {
         if (!isRoot && !isUpdatingChildComponent) {
           warn(
-            `Avoid mutating a prop directly since the value will be ` +
-            `overwritten whenever the parent component re-renders. ` +
-            `Instead, use a data or computed property based on the prop's ` +
+            'Avoid mutating a prop directly since the value will be ' +
+            'overwritten whenever the parent component re-renders. ' +
+            'Instead, use a data or computed property based on the prop\'s ' +
             `value. Prop being mutated: "${key}"`,
             vm
           )
@@ -104,7 +104,7 @@ function initProps (vm: Component, propsOptions: Object) {
     // during Vue.extend(). We only need to proxy props defined at
     // instantiation here.
     if (!(key in vm)) {
-      proxy(vm, `_props`, key)
+      proxy(vm, '_props', key)
     }
   }
   toggleObserving(true)
@@ -141,11 +141,11 @@ function initData (vm: Component) {
     if (props && hasOwn(props, key)) {
       process.env.NODE_ENV !== 'production' && warn(
         `The data property "${key}" is already declared as a prop. ` +
-        `Use prop default value instead.`,
+        'Use prop default value instead.',
         vm
       )
     } else if (!isReserved(key)) {
-      proxy(vm, `_data`, key)
+      proxy(vm, '_data', key)
     }
   }
   // observe data
@@ -158,7 +158,7 @@ export function getData (data: Function, vm: Component): any {
   try {
     return data.call(vm, vm)
   } catch (e) {
-    handleError(e, vm, `data()`)
+    handleError(e, vm, 'data()')
     return {}
   } finally {
     popTarget()
@@ -269,7 +269,7 @@ function initMethods (vm: Component, methods: Object) {
       if (typeof methods[key] !== 'function') {
         warn(
           `Method "${key}" has type "${typeof methods[key]}" in the component definition. ` +
-          `Did you reference the function correctly?`,
+          'Did you reference the function correctly?',
           vm
         )
       }
@@ -282,7 +282,7 @@ function initMethods (vm: Component, methods: Object) {
       if ((key in vm) && isReserved(key)) {
         warn(
           `Method "${key}" conflicts with an existing Vue instance method. ` +
-          `Avoid defining component methods that start with _ or $.`
+          'Avoid defining component methods that start with _ or $.'
         )
       }
     }
@@ -336,7 +336,7 @@ export function stateMixin (Vue: Class<Component>) {
       )
     }
     propsDef.set = function () {
-      warn(`$props is readonly.`, this)
+      warn('$props is readonly.', this)
     }
   }
   Object.defineProperty(Vue.prototype, '$data', dataDef)

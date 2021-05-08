@@ -36,8 +36,8 @@ export function extractPropsFromVNodeData (
             `Prop "${keyInLowerCase}" is passed to component ` +
             `${formatComponentName(tag || Ctor)}, but the declared prop name is` +
             ` "${key}". ` +
-            `Note that HTML attributes are case-insensitive and camelCased ` +
-            `props need to use their kebab-case equivalents when using in-DOM ` +
+            'Note that HTML attributes are case-insensitive and camelCased ' +
+            'props need to use their kebab-case equivalents when using in-DOM ' +
             `templates. You should probably use "${altKey}" instead of "${key}".`
           )
         }

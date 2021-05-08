@@ -49,7 +49,7 @@ describe('Global config', () => {
     it('should work', () => {
       Vue.config.ignoredElements = ['foo', /^ion-/]
       new Vue({
-        template: `<div><foo/><ion-foo/><ion-bar/></div>`
+        template: '<div><foo/><ion-foo/><ion-bar/></div>'
       }).$mount()
       expect('Unknown custom element').not.toHaveBeenWarned()
       Vue.config.ignoredElements = []
@@ -60,7 +60,7 @@ describe('Global config', () => {
     it('does not update synchronously when true', () => {
       const spy = jasmine.createSpy()
       const vm = new Vue({
-        template: `<div :class="value"></div>`,
+        template: '<div :class="value"></div>',
         updated: spy,
         data: { value: true }
       }).$mount()
@@ -72,7 +72,7 @@ describe('Global config', () => {
       const spy = jasmine.createSpy()
       Vue.config.async = false
       const vm = new Vue({
-        template: `<div :class="value"></div>`,
+        template: '<div :class="value"></div>',
         updated: spy,
         data: { value: true }
       }).$mount()

@@ -237,12 +237,12 @@ describe('Options directives', () => {
     }
 
     const Child = {
-      template: `<div v-if="ok"/><span v-else/>`,
+      template: '<div v-if="ok"/><span v-else/>',
       data: () => ({ ok: true })
     }
 
     const vm = new Vue({
-      template: `<child ref="child" v-test />`,
+      template: '<child ref="child" v-test />',
       directives: { test: dir },
       components: { Child }
     }).$mount()
@@ -268,7 +268,7 @@ describe('Options directives', () => {
 
   it('dynamic arguments', done => {
     const vm = new Vue({
-      template: `<div v-my:[key]="1"/>`,
+      template: '<div v-my:[key]="1"/>',
       data: {
         key: 'foo'
       },
@@ -290,7 +290,7 @@ describe('Options directives', () => {
 
   it('deep object like `deep.a` as dynamic arguments', done => {
     const vm = new Vue({
-      template: `<div v-my:[deep.a]="1"/>`,
+      template: '<div v-my:[deep.a]="1"/>',
       data: {
         deep: {
           a: 'foo'
@@ -314,7 +314,7 @@ describe('Options directives', () => {
 
   it('deep object like `deep.a.b` as dynamic arguments', done => {
     const vm = new Vue({
-      template: `<div v-my:[deep.a.b]="1"/>`,
+      template: '<div v-my:[deep.a.b]="1"/>',
       data: {
         deep: {
           a: {
@@ -340,7 +340,7 @@ describe('Options directives', () => {
 
   it('deep object as dynamic arguments with modifiers', done => {
     const vm = new Vue({
-      template: `<div v-my:[deep.a.b].x.y="1"/>`,
+      template: '<div v-my:[deep.a.b].x.y="1"/>',
       data: {
         deep: {
           a: {

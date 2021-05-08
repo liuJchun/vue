@@ -10,7 +10,7 @@ describe('expression parser', () => {
     it('identifiers', () => {
       expect(generateBinding('x')).toEqual({ '@binding': 'x' })
       expect(generateBinding('x.y')).toEqual({ '@binding': 'x.y' })
-      expect(generateBinding(`x.y['z']`)).toEqual({ '@binding': `x.y['z']` })
+      expect(generateBinding('x.y[\'z\']')).toEqual({ '@binding': 'x.y[\'z\']' })
     })
 
     it('object literal', () => {
@@ -30,18 +30,18 @@ describe('expression parser', () => {
     })
 
     it('expressions', () => {
-      expect(generateBinding(`3 + 5`)).toEqual({ '@binding': `3 + 5` })
-      expect(generateBinding(`'x' + 2`)).toEqual({ '@binding': `'x' + 2` })
-      expect(generateBinding(`\`xx\` + 2`)).toEqual({ '@binding': `\`xx\` + 2` })
-      expect(generateBinding(`item.size * 23 + 'px'`)).toEqual({ '@binding': `item.size * 23 + 'px'` })
+      expect(generateBinding('3 + 5')).toEqual({ '@binding': '3 + 5' })
+      expect(generateBinding('\'x\' + 2')).toEqual({ '@binding': '\'x\' + 2' })
+      expect(generateBinding('`xx` + 2')).toEqual({ '@binding': '`xx` + 2' })
+      expect(generateBinding('item.size * 23 + \'px\'')).toEqual({ '@binding': 'item.size * 23 + \'px\'' })
     })
 
     it('object bindings', () => {
-      expect(generateBinding(`{ color: textColor }`)).toEqual({
+      expect(generateBinding('{ color: textColor }')).toEqual({
         color: { '@binding': 'textColor' }
       })
-      expect(generateBinding(`{ color: '#FF' + 66 * 100, fontSize: item.size }`)).toEqual({
-        color: { '@binding': `'#FF' + 66 * 100` },
+      expect(generateBinding('{ color: \'#FF\' + 66 * 100, fontSize: item.size }')).toEqual({
+        color: { '@binding': '\'#FF\' + 66 * 100' },
         fontSize: { '@binding': 'item.size' }
       })
       expect(generateBinding(`{
@@ -54,13 +54,13 @@ describe('expression parser', () => {
         x: { xx: { '@binding': 'obj' }, xy: { '@binding': '-2 + 5' }},
         y: {
           yy: { yyy: { '@binding': 'obj.y || yy' }},
-          yz: { '@binding': `typeof object.yz === 'string' ? object.yz : ''` }
+          yz: { '@binding': 'typeof object.yz === \'string\' ? object.yz : \'\'' }
         }
       })
     })
 
     it('array bindings', () => {
-      expect(generateBinding(`[textColor, 3 + 5, 'string']`)).toEqual([
+      expect(generateBinding('[textColor, 3 + 5, \'string\']')).toEqual([
         { '@binding': 'textColor' },
         { '@binding': '3 + 5' },
         'string'
@@ -70,7 +70,7 @@ describe('expression parser', () => {
         item && item.style,
         { fontSize: item.size | 0 }
       ]`)).toEqual([
-        { color: { '@binding': `'#FF' + 66 * -100` }},
+        { color: { '@binding': '\'#FF\' + 66 * -100' }},
         { '@binding': 'item && item.style' },
         { fontSize: { '@binding': 'item.size | 0' }}
       ])
@@ -81,7 +81,7 @@ describe('expression parser', () => {
           yz: [object.yz, void 0]
         }
       }]`)).toEqual([{
-        x: [{ xx: [{ '@binding': `fn instanceof Function ? 'function' : ''` }, 25] }],
+        x: [{ xx: [{ '@binding': 'fn instanceof Function ? \'function\' : \'\'' }, 25] }],
         y: {
           yy: [{ yyy: [{ '@binding': 'obj.yy.y' }, { '@binding': 'obj.y.yy' }] }],
           yz: [{ '@binding': 'object.yz' }, { '@binding': 'void 0' }]

@@ -29,7 +29,7 @@ function normalizeValue(key: string, value: any): string {
     return `${key}:${value};`
   } else {
     // invalid values
-    return ``
+    return ''
   }
 }
 

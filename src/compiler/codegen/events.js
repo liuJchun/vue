@@ -42,14 +42,14 @@ const genGuard = condition => `if(${condition})return null;`
 const modifierCode: { [key: string]: string } = {
   stop: '$event.stopPropagation();',
   prevent: '$event.preventDefault();',
-  self: genGuard(`$event.target !== $event.currentTarget`),
-  ctrl: genGuard(`!$event.ctrlKey`),
-  shift: genGuard(`!$event.shiftKey`),
-  alt: genGuard(`!$event.altKey`),
-  meta: genGuard(`!$event.metaKey`),
-  left: genGuard(`'button' in $event && $event.button !== 0`),
-  middle: genGuard(`'button' in $event && $event.button !== 1`),
-  right: genGuard(`'button' in $event && $event.button !== 2`)
+  self: genGuard('$event.target !== $event.currentTarget'),
+  ctrl: genGuard('!$event.ctrlKey'),
+  shift: genGuard('!$event.shiftKey'),
+  alt: genGuard('!$event.altKey'),
+  meta: genGuard('!$event.metaKey'),
+  left: genGuard('\'button\' in $event && $event.button !== 0'),
+  middle: genGuard('\'button\' in $event && $event.button !== 1'),
+  right: genGuard('\'button\' in $event && $event.button !== 2')
 }
 
 export function genHandlers (
@@ -57,8 +57,8 @@ export function genHandlers (
   isNative: boolean
 ): string {
   const prefix = isNative ? 'nativeOn:' : 'on:'
-  let staticHandlers = ``
-  let dynamicHandlers = ``
+  let staticHandlers = ''
+  let dynamicHandlers = ''
   for (const name in events) {
     const handlerCode = genHandler(events[name])
     if (events[name] && events[name].dynamic) {
@@ -167,7 +167,7 @@ function genKeyFilter (keys: Array<string>): string {
     // make sure the key filters only apply to KeyboardEvents
     // #9441: can't use 'keyCode' in $event because Chrome autofill fires fake
     // key events that do not have keyCode property...
-    `if(!$event.type.indexOf('key')&&` +
+    'if(!$event.type.indexOf(\'key\')&&' +
     `${keys.map(genFilterCode).join('&&')})return null;`
   )
 }
@@ -180,11 +180,11 @@ function genFilterCode (key: string): string {
   const keyCode = keyCodes[key]
   const keyName = keyNames[key]
   return (
-    `_k($event.keyCode,` +
+    '_k($event.keyCode,' +
     `${JSON.stringify(key)},` +
     `${JSON.stringify(keyCode)},` +
-    `$event.key,` +
+    '$event.key,' +
     `${JSON.stringify(keyName)}` +
-    `)`
+    ')'
   )
 }

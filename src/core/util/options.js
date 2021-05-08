@@ -321,7 +321,7 @@ function normalizeProps (options: Object, vm: ?Component) {
     }
   } else if (process.env.NODE_ENV !== 'production') {
     warn(
-      `Invalid value for option "props": expected an Array or an Object, ` +
+      'Invalid value for option "props": expected an Array or an Object, ' +
       `but got ${toRawType(props)}.`,
       vm
     )
@@ -349,7 +349,7 @@ function normalizeInject (options: Object, vm: ?Component) {
     }
   } else if (process.env.NODE_ENV !== 'production') {
     warn(
-      `Invalid value for option "inject": expected an Array or an Object, ` +
+      'Invalid value for option "inject": expected an Array or an Object, ' +
       `but got ${toRawType(inject)}.`,
       vm
     )

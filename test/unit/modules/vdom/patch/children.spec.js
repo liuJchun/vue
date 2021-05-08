@@ -453,7 +453,7 @@ describe('vdom patch: children', () => {
     }
     const b = makeNode('B')
     b.isStatic = true
-    b.key = `__static__1`
+    b.key = '__static__1'
     const vnode1 = new VNode('div', {}, [makeNode('A'), b, makeNode('C')])
     const vnode2 = new VNode('div', {}, [b])
     const vnode3 = new VNode('div', {}, [makeNode('A'), b, makeNode('C')])
@@ -474,7 +474,7 @@ describe('vdom patch: children', () => {
     }
     const b = makeNode('B')
     b.isStatic = true
-    b.key = `__static__1`
+    b.key = '__static__1'
     const vnode1 = new VNode('div', {}, [makeNode('A'), b, makeNode('C')])
     const vnode2 = new VNode('div', {}, [b])
     const vnode3 = new VNode('div', {}, [makeNode('A'), b, makeNode('C')])
@@ -515,7 +515,7 @@ describe('vdom patch: children', () => {
 
     const vnode = new VNode('p', {}, ['b', 'a', 'c', 'b'].map(makeNode))
     patch(null, vnode)
-    expect(`Duplicate keys detected: 'b'`).toHaveBeenWarned()
+    expect('Duplicate keys detected: \'b\'').toHaveBeenWarned()
   })
 
   it('should warn with duplicate keys: updateChildren', () => {
@@ -526,9 +526,9 @@ describe('vdom patch: children', () => {
     const vnode2 = new VNode('p', {}, ['b', 'a', 'c', 'b'].map(makeNode))
     const vnode3 = new VNode('p', {}, ['b', 'x', 'd', 'b'].map(makeNode))
     patch(vnode0, vnode2)
-    expect(`Duplicate keys detected: 'b'`).toHaveBeenWarned()
+    expect('Duplicate keys detected: \'b\'').toHaveBeenWarned()
     patch(vnode2, vnode3)
-    expect(`Duplicate keys detected: 'b'`).toHaveBeenWarned()
+    expect('Duplicate keys detected: \'b\'').toHaveBeenWarned()
   })
 
   it('should warn with duplicate keys: patchVnode with empty oldVnode', () => {
@@ -540,6 +540,6 @@ describe('vdom patch: children', () => {
     const vnode2 = new VNode('div', undefined, ['1', '2', '3', '4', '4'].map(makeNode))
 
     patch(vnode1, vnode2)
-    expect(`Duplicate keys detected: '4'`).toHaveBeenWarned()
+    expect('Duplicate keys detected: \'4\'').toHaveBeenWarned()
   })
 })

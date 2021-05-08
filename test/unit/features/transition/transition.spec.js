@@ -552,7 +552,7 @@ if (!isIE9) {
         data: { ok: true },
         components: {
           test: {
-            template: `<transition name="test"><div class="test">foo</div></transition>`
+            template: '<transition name="test"><div class="test">foo</div></transition>'
           }
         }
       }).$mount(el)
@@ -1028,9 +1028,9 @@ if (!isIE9) {
 
     it('warn when used on multiple elements', () => {
       new Vue({
-        template: `<transition><p>1</p><p>2</p></transition>`
+        template: '<transition><p>1</p><p>2</p></transition>'
       }).$mount()
-      expect(`<transition> can only be used on a single element`).toHaveBeenWarned()
+      expect('<transition> can only be used on a single element').toHaveBeenWarned()
     })
 
     describe('explicit durations -', () => {
@@ -1229,11 +1229,11 @@ if (!isIE9) {
 
         vm.ok = false
         waitForUpdate(() => {
-          expect(`<transition> explicit leave duration is not a valid number - got "foo"`).toHaveBeenWarned()
+          expect('<transition> explicit leave duration is not a valid number - got "foo"').toHaveBeenWarned()
         }).thenWaitFor(duration + buffer).then(() => {
           vm.ok = true
         }).then(() => {
-          expect(`<transition> explicit enter duration is NaN`).toHaveBeenWarned()
+          expect('<transition> explicit enter duration is NaN').toHaveBeenWarned()
         }).then(done)
       })
     })

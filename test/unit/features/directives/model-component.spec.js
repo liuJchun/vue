@@ -15,7 +15,7 @@ describe('Directive v-model component', () => {
       components: {
         test: {
           props: ['value'],
-          template: `<input :value="value" @input="$emit('input', $event.target.value)">`
+          template: '<input :value="value" @input="$emit(\'input\', $event.target.value)">'
         }
       }
     }).$mount()
@@ -50,7 +50,7 @@ describe('Directive v-model component', () => {
       components: {
         test: {
           props: ['value'],
-          template: `<input :value="value" @input="$emit('input', $event.target.value)">`
+          template: '<input :value="value" @input="$emit(\'input\', $event.target.value)">'
         }
       }
     }).$mount()
@@ -93,7 +93,7 @@ describe('Directive v-model component', () => {
             event: 'update'
           },
           props: ['currentValue'],
-          template: `<input :value="currentValue" @input="$emit('update', $event.target.value)">`
+          template: '<input :value="currentValue" @input="$emit(\'update\', $event.target.value)">'
         }
       }
     }).$mount()
@@ -117,7 +117,7 @@ describe('Directive v-model component', () => {
 
   it('modifier: .number', () => {
     const vm = new Vue({
-      template: `<div><my-input ref="input" v-model.number="text"></my-input></div>`,
+      template: '<div><my-input ref="input" v-model.number="text"></my-input></div>',
       data: { text: 'foo' },
       components: {
         'my-input': {
@@ -134,7 +134,7 @@ describe('Directive v-model component', () => {
 
   it('modifier: .trim', () => {
     const vm = new Vue({
-      template: `<div><my-input ref="input" v-model.trim="text"></my-input></div>`,
+      template: '<div><my-input ref="input" v-model.trim="text"></my-input></div>',
       data: { text: 'foo' },
       components: {
         'my-input': {
@@ -228,6 +228,6 @@ describe('Directive v-model component', () => {
       }
     }).$mount()
 
-    expect(vm.$el.innerHTML).toBe('<div>foo</div>');
+    expect(vm.$el.innerHTML).toBe('<div>foo</div>')
   })
 })

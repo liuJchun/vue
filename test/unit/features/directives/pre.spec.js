@@ -34,7 +34,7 @@ describe('Directive v-pre', function () {
 
   // #8286
   it('should not compile custom component tags', function () {
-    Vue.component('vtest', { template: ` <div>Hello World</div>` })
+    Vue.component('vtest', { template: ' <div>Hello World</div>' })
     const vm = new Vue({
       template: '<div v-pre><vtest></vtest></div>',
       replace: true

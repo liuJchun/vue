@@ -19,7 +19,7 @@ export function preTransformRecycleList (
   const exp = getAndRemoveAttr(el, 'for')
   if (!exp) {
     if (options.warn) {
-      options.warn(`Invalid <recycle-list> syntax: missing "for" expression.`)
+      options.warn('Invalid <recycle-list> syntax: missing "for" expression.')
     }
     return
   }

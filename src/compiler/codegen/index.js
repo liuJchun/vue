@@ -132,7 +132,7 @@ function genOnce (el: ASTElement, state: CodegenState): string {
     }
     if (!key) {
       process.env.NODE_ENV !== 'production' && state.warn(
-        `v-once can only be used inside v-for that is keyed. `,
+        'v-once can only be used inside v-for that is keyed. ',
         el.rawAttrsMap['v-once']
       )
       return genElement(el, state)
@@ -203,8 +203,8 @@ export function genFor (
   ) {
     state.warn(
       `<${el.tag} v-for="${alias} in ${exp}">: component lists rendered with ` +
-      `v-for should have explicit keys. ` +
-      `See https://vuejs.org/guide/list.html#key for more info.`,
+      'v-for should have explicit keys. ' +
+      'See https://vuejs.org/guide/list.html#key for more info.',
       el.rawAttrsMap['v-for'],
       true /* tip */
     )
@@ -234,11 +234,11 @@ export function genData (el: ASTElement, state: CodegenState): string {
     data += `ref:${el.ref},`
   }
   if (el.refInFor) {
-    data += `refInFor:true,`
+    data += 'refInFor:true,'
   }
   // pre
   if (el.pre) {
-    data += `pre:true,`
+    data += 'pre:true,'
   }
   // record original tag name for components using "is" attribute
   if (el.component) {
@@ -410,9 +410,9 @@ function genScopedSlots (
     .join(',')
 
   return `scopedSlots:_u([${generatedSlots}]${
-    needsForceUpdate ? `,null,true` : ``
+    needsForceUpdate ? ',null,true' : ''
   }${
-    !needsForceUpdate && needsKey ? `,null,false,${hash(generatedSlots)}` : ``
+    !needsForceUpdate && needsKey ? `,null,false,${hash(generatedSlots)}` : ''
   })`
 }
 
@@ -441,13 +441,13 @@ function genScopedSlot (
 ): string {
   const isLegacySyntax = el.attrsMap['slot-scope']
   if (el.if && !el.ifProcessed && !isLegacySyntax) {
-    return genIf(el, state, genScopedSlot, `null`)
+    return genIf(el, state, genScopedSlot, 'null')
   }
   if (el.for && !el.forProcessed) {
     return genFor(el, state, genScopedSlot)
   }
   const slotScope = el.slotScope === emptySlotScopeToken
-    ? ``
+    ? ''
     : String(el.slotScope)
   const fn = `function(${slotScope}){` +
     `return ${el.tag === 'template'
@@ -457,8 +457,8 @@ function genScopedSlot (
       : genElement(el, state)
     }}`
   // reverse proxy v-slot without scope on this.$slots
-  const reverseProxy = slotScope ? `` : `,proxy:true`
-  return `{key:${el.slotTarget || `"default"`},fn:${fn}${reverseProxy}}`
+  const reverseProxy = slotScope ? '' : ',proxy:true'
+  return `{key:${el.slotTarget || '"default"'},fn:${fn}${reverseProxy}}`
 }
 
 export function genChildren (
@@ -478,8 +478,8 @@ export function genChildren (
       el.tag !== 'slot'
     ) {
       const normalizationType = checkSkip
-        ? state.maybeComponent(el) ? `,1` : `,0`
-        : ``
+        ? state.maybeComponent(el) ? ',1' : ',0'
+        : ''
       return `${(altGenElement || genElement)(el, state)}${normalizationType}`
     }
     const normalizationType = checkSkip
@@ -558,7 +558,7 @@ function genSlot (el: ASTElement, state: CodegenState): string {
     : null
   const bind = el.attrsMap['v-bind']
   if ((attrs || bind) && !children) {
-    res += `,null`
+    res += ',null'
   }
   if (attrs) {
     res += `,${attrs}`
@@ -582,8 +582,8 @@ function genComponent (
 }
 
 function genProps (props: Array<ASTAttr>): string {
-  let staticProps = ``
-  let dynamicProps = ``
+  let staticProps = ''
+  let dynamicProps = ''
   for (let i = 0; i < props.length; i++) {
     const prop = props[i]
     const value = __WEEX__

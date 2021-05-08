@@ -14,7 +14,7 @@ export function registerComponentHook (
   fn: Function
 ) {
   if (!document || !document.taskCenter) {
-    warn(`Can't find available "document" or "taskCenter".`)
+    warn('Can\'t find available "document" or "taskCenter".')
     return
   }
   if (typeof document.taskCenter.registerHook === 'function') {
@@ -30,7 +30,7 @@ export function updateComponentData (
   callback?: Function
 ) {
   if (!document || !document.taskCenter) {
-    warn(`Can't find available "document" or "taskCenter".`)
+    warn('Can\'t find available "document" or "taskCenter".')
     return
   }
   if (typeof document.taskCenter.updateData === 'function') {

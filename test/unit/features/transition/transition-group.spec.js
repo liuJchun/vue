@@ -17,9 +17,9 @@ if (!isIE9) {
       const vm = new Vue({
         template: `
           <div>
-            ${useIs ? `<span is="transition-group">` : `<transition-group${appear ? ` appear` : ``}>`}
+            ${useIs ? '<span is="transition-group">' : `<transition-group${appear ? ' appear' : ''}>`}
               <div v-for="item in items" :key="item" class="test">{{ item }}</div>
-            ${useIs ? `</span>` : `</transition-group>`}
+            ${useIs ? '</span>' : '</transition-group>'}
           </div>
         `,
         data: {
@@ -28,9 +28,9 @@ if (!isIE9) {
       }).$mount(el)
       if (!appear) {
         expect(vm.$el.innerHTML).toBe(
-          `<span>` +
+          '<span>' +
             vm.items.map(i => `<div class="test">${i}</div>`).join('') +
-          `</span>`
+          '</span>'
         )
       }
       return vm
@@ -41,25 +41,25 @@ if (!isIE9) {
       vm.items.push('d', 'e')
       waitForUpdate(() => {
         expect(vm.$el.innerHTML).toBe(
-          `<span>` +
+          '<span>' +
             ['a', 'b', 'c'].map(i => `<div class="test">${i}</div>`).join('') +
-            `<div class="test v-enter v-enter-active">d</div>` +
-            `<div class="test v-enter v-enter-active">e</div>` +
-          `</span>`
+            '<div class="test v-enter v-enter-active">d</div>' +
+            '<div class="test v-enter v-enter-active">e</div>' +
+          '</span>'
         )
       }).thenWaitFor(nextFrame).then(() => {
         expect(vm.$el.innerHTML).toBe(
-          `<span>` +
+          '<span>' +
             ['a', 'b', 'c'].map(i => `<div class="test">${i}</div>`).join('') +
-            `<div class="test v-enter-active v-enter-to">d</div>` +
-            `<div class="test v-enter-active v-enter-to">e</div>` +
-          `</span>`
+            '<div class="test v-enter-active v-enter-to">d</div>' +
+            '<div class="test v-enter-active v-enter-to">e</div>' +
+          '</span>'
         )
       }).thenWaitFor(duration + buffer).then(() => {
         expect(vm.$el.innerHTML).toBe(
-          `<span>` +
+          '<span>' +
             vm.items.map(i => `<div class="test">${i}</div>`).join('') +
-          `</span>`
+          '</span>'
         )
       }).then(done)
     })
@@ -69,25 +69,25 @@ if (!isIE9) {
       vm.items = ['b']
       waitForUpdate(() => {
         expect(vm.$el.innerHTML).toBe(
-          `<span>` +
-            `<div class="test v-leave v-leave-active">a</div>` +
-            `<div class="test">b</div>` +
-            `<div class="test v-leave v-leave-active">c</div>` +
-          `</span>`
+          '<span>' +
+            '<div class="test v-leave v-leave-active">a</div>' +
+            '<div class="test">b</div>' +
+            '<div class="test v-leave v-leave-active">c</div>' +
+          '</span>'
         )
       }).thenWaitFor(nextFrame).then(() => {
         expect(vm.$el.innerHTML).toBe(
-          `<span>` +
-            `<div class="test v-leave-active v-leave-to">a</div>` +
-            `<div class="test">b</div>` +
-            `<div class="test v-leave-active v-leave-to">c</div>` +
-          `</span>`
+          '<span>' +
+            '<div class="test v-leave-active v-leave-to">a</div>' +
+            '<div class="test">b</div>' +
+            '<div class="test v-leave-active v-leave-to">c</div>' +
+          '</span>'
         )
       }).thenWaitFor(duration + buffer).then(() => {
         expect(vm.$el.innerHTML).toBe(
-          `<span>` +
+          '<span>' +
             vm.items.map(i => `<div class="test">${i}</div>`).join('') +
-          `</span>`
+          '</span>'
         )
       }).then(done)
     })
@@ -97,27 +97,27 @@ if (!isIE9) {
       vm.items = ['b', 'c', 'd']
       waitForUpdate(() => {
         expect(vm.$el.innerHTML).toBe(
-          `<span>` +
-            `<div class="test v-leave v-leave-active">a</div>` +
-            `<div class="test">b</div>` +
-            `<div class="test">c</div>` +
-            `<div class="test v-enter v-enter-active">d</div>` +
-          `</span>`
+          '<span>' +
+            '<div class="test v-leave v-leave-active">a</div>' +
+            '<div class="test">b</div>' +
+            '<div class="test">c</div>' +
+            '<div class="test v-enter v-enter-active">d</div>' +
+          '</span>'
         )
       }).thenWaitFor(nextFrame).then(() => {
         expect(vm.$el.innerHTML).toBe(
-          `<span>` +
-            `<div class="test v-leave-active v-leave-to">a</div>` +
-            `<div class="test">b</div>` +
-            `<div class="test">c</div>` +
-            `<div class="test v-enter-active v-enter-to">d</div>` +
-          `</span>`
+          '<span>' +
+            '<div class="test v-leave-active v-leave-to">a</div>' +
+            '<div class="test">b</div>' +
+            '<div class="test">c</div>' +
+            '<div class="test v-enter-active v-enter-to">d</div>' +
+          '</span>'
         )
       }).thenWaitFor(duration + buffer).then(() => {
         expect(vm.$el.innerHTML).toBe(
-          `<span>` +
+          '<span>' +
             vm.items.map(i => `<div class="test">${i}</div>`).join('') +
-          `</span>`
+          '</span>'
         )
       }).then(done)
     })
@@ -127,27 +127,27 @@ if (!isIE9) {
       vm.items = ['b', 'c', 'd']
       waitForUpdate(() => {
         expect(vm.$el.innerHTML).toBe(
-          `<span>` +
-            `<div class="test v-leave v-leave-active">a</div>` +
-            `<div class="test">b</div>` +
-            `<div class="test">c</div>` +
-            `<div class="test v-enter v-enter-active">d</div>` +
-          `</span>`
+          '<span>' +
+            '<div class="test v-leave v-leave-active">a</div>' +
+            '<div class="test">b</div>' +
+            '<div class="test">c</div>' +
+            '<div class="test v-enter v-enter-active">d</div>' +
+          '</span>'
         )
       }).thenWaitFor(nextFrame).then(() => {
         expect(vm.$el.innerHTML).toBe(
-          `<span>` +
-            `<div class="test v-leave-active v-leave-to">a</div>` +
-            `<div class="test">b</div>` +
-            `<div class="test">c</div>` +
-            `<div class="test v-enter-active v-enter-to">d</div>` +
-          `</span>`
+          '<span>' +
+            '<div class="test v-leave-active v-leave-to">a</div>' +
+            '<div class="test">b</div>' +
+            '<div class="test">c</div>' +
+            '<div class="test v-enter-active v-enter-to">d</div>' +
+          '</span>'
         )
       }).thenWaitFor(duration + buffer).then(() => {
         expect(vm.$el.innerHTML).toBe(
-          `<span>` +
+          '<span>' +
             vm.items.map(i => `<div class="test">${i}</div>`).join('') +
-          `</span>`
+          '</span>'
         )
       }).then(done)
     })
@@ -156,21 +156,21 @@ if (!isIE9) {
       const vm = createBasicVM(false, true /* appear */)
       waitForUpdate(() => {
         expect(vm.$el.innerHTML).toBe(
-          `<span>` +
+          '<span>' +
             vm.items.map(i => `<div class="test v-enter v-enter-active">${i}</div>`).join('') +
-          `</span>`
+          '</span>'
         )
       }).thenWaitFor(nextFrame).then(() => {
         expect(vm.$el.innerHTML).toBe(
-          `<span>` +
+          '<span>' +
             vm.items.map(i => `<div class="test v-enter-active v-enter-to">${i}</div>`).join('') +
-          `</span>`
+          '</span>'
         )
       }).thenWaitFor(duration + buffer).then(() => {
         expect(vm.$el.innerHTML).toBe(
-          `<span>` +
+          '<span>' +
             vm.items.map(i => `<div class="test">${i}</div>`).join('') +
-          `</span>`
+          '</span>'
         )
       }).then(done)
     })
@@ -212,32 +212,32 @@ if (!isIE9) {
       vm.items.push('d')
       waitForUpdate(() => {
         expect(vm.$el.innerHTML).toBe(
-          `<span>` +
-            `<div class="test">a</div>` +
-            `<div class="test">b</div>` +
-            `<div class="test">c</div>` +
-            `<div class="test v-enter v-enter-active">d</div>` +
-          `</span>`
+          '<span>' +
+            '<div class="test">a</div>' +
+            '<div class="test">b</div>' +
+            '<div class="test">c</div>' +
+            '<div class="test v-enter v-enter-active">d</div>' +
+          '</span>'
         )
         expect(beforeEnterSpy.calls.count()).toBe(1)
       }).thenWaitFor(_next => { next = _next }).then(() => {
         expect(vm.$el.innerHTML).toBe(
-          `<span>` +
-            `<div class="test">a</div>` +
-            `<div class="test">b</div>` +
-            `<div class="test">c</div>` +
-            `<div class="test">d</div>` +
-          `</span>`
+          '<span>' +
+            '<div class="test">a</div>' +
+            '<div class="test">b</div>' +
+            '<div class="test">c</div>' +
+            '<div class="test">d</div>' +
+          '</span>'
         )
         expect(afterEnterSpy.calls.count()).toBe(1)
         vm.items.shift()
       }).thenWaitFor(_next => { next = _next }).then(() => {
         expect(vm.$el.innerHTML).toBe(
-          `<span>` +
-            `<div class="test">b</div>` +
-            `<div class="test">c</div>` +
-            `<div class="test">d</div>` +
-          `</span>`
+          '<span>' +
+            '<div class="test">b</div>' +
+            '<div class="test">c</div>' +
+            '<div class="test">d</div>' +
+          '</span>'
         )
         expect(afterLeaveSpy.calls.count()).toBe(1)
       }).then(done)
@@ -260,36 +260,36 @@ if (!isIE9) {
       vm.items = ['d', 'b', 'a']
       waitForUpdate(() => {
         expect(vm.$el.innerHTML.replace(/\s?style=""(\s?)/g, '$1')).toBe(
-          `<span>` +
-            `<div class="test group-enter group-enter-active">d</div>` +
-            `<div class="test">b</div>` +
-            `<div class="test group-move">a</div>` +
-            `<div class="test group-leave group-leave-active group-move">c</div>` +
-          `</span>`
+          '<span>' +
+            '<div class="test group-enter group-enter-active">d</div>' +
+            '<div class="test">b</div>' +
+            '<div class="test group-move">a</div>' +
+            '<div class="test group-leave group-leave-active group-move">c</div>' +
+          '</span>'
         )
       }).thenWaitFor(nextFrame).then(() => {
         expect(vm.$el.innerHTML.replace(/\s?style=""(\s?)/g, '$1')).toBe(
-          `<span>` +
-            `<div class="test group-enter-active group-enter-to">d</div>` +
-            `<div class="test">b</div>` +
-            `<div class="test group-move">a</div>` +
-            `<div class="test group-leave-active group-move group-leave-to">c</div>` +
-          `</span>`
+          '<span>' +
+            '<div class="test group-enter-active group-enter-to">d</div>' +
+            '<div class="test">b</div>' +
+            '<div class="test group-move">a</div>' +
+            '<div class="test group-leave-active group-move group-leave-to">c</div>' +
+          '</span>'
         )
       }).thenWaitFor(duration * 2).then(() => {
         expect(vm.$el.innerHTML.replace(/\s?style=""(\s?)/g, '$1')).toBe(
-          `<span>` +
-            `<div class="test">d</div>` +
-            `<div class="test">b</div>` +
-            `<div class="test">a</div>` +
-          `</span>`
+          '<span>' +
+            '<div class="test">d</div>' +
+            '<div class="test">b</div>' +
+            '<div class="test">a</div>' +
+          '</span>'
         )
       }).then(done)
     })
 
     it('warn unkeyed children', () => {
       new Vue({
-        template: `<div><transition-group><div v-for="i in 3"></div></transition-group></div>`
+        template: '<div><transition-group><div v-for="i in 3"></div></transition-group></div>'
       }).$mount()
       expect('<transition-group> children must be keyed: <div>').toHaveBeenWarned()
     })
@@ -314,29 +314,29 @@ if (!isIE9) {
       vm.items = ['b', 'c', 'a']
       waitForUpdate(() => {
         expect(vm.$el.innerHTML.replace(/\s?style=""(\s?)/g, '$1')).toBe(
-          `<span>` +
-            `<div>b</div>` +
-            `<div>c</div>` +
-            `<div>a</div>` +
-          `</span>`
+          '<span>' +
+            '<div>b</div>' +
+            '<div>c</div>' +
+            '<div>a</div>' +
+          '</span>'
         )
         vm.name = 'group'
         vm.items = ['a', 'b', 'c']
       }).thenWaitFor(nextFrame).then(() => {
         expect(vm.$el.innerHTML.replace(/\s?style=""(\s?)/g, '$1')).toBe(
-          `<span>` +
-            `<div class="group-move">a</div>` +
-            `<div class="group-move">b</div>` +
-            `<div class="group-move">c</div>` +
-          `</span>`
+          '<span>' +
+            '<div class="group-move">a</div>' +
+            '<div class="group-move">b</div>' +
+            '<div class="group-move">c</div>' +
+          '</span>'
         )
       }).thenWaitFor(duration * 2 + buffer).then(() => {
         expect(vm.$el.innerHTML.replace(/\s?style=""(\s?)/g, '$1')).toBe(
-          `<span>` +
-            `<div>a</div>` +
-            `<div>b</div>` +
-            `<div>c</div>` +
-          `</span>`
+          '<span>' +
+            '<div>a</div>' +
+            '<div>b</div>' +
+            '<div>c</div>' +
+          '</span>'
         )
       }).then(done)
     })

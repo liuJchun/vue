@@ -348,12 +348,12 @@ describe('Observer', () => {
     try {
       setProp(null, 'foo', 1)
     } catch (e) {}
-    expect(`Cannot set reactive property on undefined, null, or primitive value`).toHaveBeenWarned()
+    expect('Cannot set reactive property on undefined, null, or primitive value').toHaveBeenWarned()
 
     try {
       delProp(null, 'foo')
     } catch (e) {}
-    expect(`Cannot delete reactive property on undefined, null, or primitive value`).toHaveBeenWarned()
+    expect('Cannot delete reactive property on undefined, null, or primitive value').toHaveBeenWarned()
   })
 
   it('should lazy invoke existing getters', () => {

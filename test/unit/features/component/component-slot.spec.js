@@ -112,19 +112,19 @@ describe('Component slot', () => {
  it('it should work with previous versions of the templates', () => {
    const Test = {
       render() {
-        var _vm = this;
-        var _h = _vm.$createElement;
-        var _c = _vm._self._c || vm._h;
-        return _c('div', [_vm._t("default", [_c('p', [_vm._v("slot default")])])], 2)
+        var _vm = this
+        var _h = _vm.$createElement
+        var _c = _vm._self._c || vm._h
+        return _c('div', [_vm._t('default', [_c('p', [_vm._v('slot default')])])], 2)
       }
     }
     let vm = new Vue({
-      template: `<test/>`,
+      template: '<test/>',
       components: { Test }
     }).$mount()
     expect(vm.$el.textContent).toBe('slot default')
     vm = new Vue({
-      template: `<test>custom content</test>`,
+      template: '<test>custom content</test>',
       components: { Test }
     }).$mount()
     expect(vm.$el.textContent).toBe('custom content')
@@ -195,8 +195,8 @@ describe('Component slot', () => {
 
   it('should accept expressions in slot attribute and slot names', () => {
     mount({
-      childTemplate: `<div><slot :name="'a'"></slot></div>`,
-      parentContent: `<p>one</p><p :slot="'a'">two</p>`
+      childTemplate: '<div><slot :name="\'a\'"></slot></div>',
+      parentContent: '<p>one</p><p :slot="\'a\'">two</p>'
     })
     expect(child.$el.innerHTML).toBe('<p>two</p>')
   })
@@ -329,7 +329,7 @@ describe('Component slot', () => {
           <slot name="second"><p>second named slot</p></slot>
         </div>
       `,
-      parentContent: `<div slot="first">1</div> <div slot="second">2</div> <div slot="second">2+</div>`
+      parentContent: '<div slot="first">1</div> <div slot="second">2</div> <div slot="second">2+</div>'
     })
     expect(child.$el.innerHTML).toBe(
       '<div>1</div> <p>this is the default slot</p> <div>2</div><div>2+</div>'
@@ -469,7 +469,7 @@ describe('Component slot', () => {
           data () {
             return { a: 1 }
           },
-          template: `<div><slot name="foo"></slot>{{ a }}</div>`
+          template: '<div><slot name="foo"></slot>{{ a }}</div>'
         }
       }
     }).$mount()
@@ -496,7 +496,7 @@ describe('Component slot', () => {
           data () {
             return { ok: true }
           },
-          template: `<div><slot name="foo" v-if="ok"></slot></div>`
+          template: '<div><slot name="foo" v-if="ok"></slot></div>'
         },
         child: {
           template: '<div>child</div>',
@@ -548,20 +548,20 @@ describe('Component slot', () => {
         }
       }
     }).$mount()
-    expect(vm.$el.innerHTML).toBe(`<div>1</div> <div>1</div> <pre><div>1</div></pre>`)
+    expect(vm.$el.innerHTML).toBe('<div>1</div> <div>1</div> <pre><div>1</div></pre>')
     vm.n++
     waitForUpdate(() => {
-      expect(vm.$el.innerHTML).toBe(`<div>2</div> <div>2</div> <pre><div>2</div></pre>`)
+      expect(vm.$el.innerHTML).toBe('<div>2</div> <div>2</div> <pre><div>2</div></pre>')
       vm.n++
     }).then(() => {
-      expect(vm.$el.innerHTML).toBe(`<div>3</div> <div>3</div> <pre><div>3</div></pre>`)
+      expect(vm.$el.innerHTML).toBe('<div>3</div> <div>3</div> <pre><div>3</div></pre>')
       vm.$refs.foo.ok = false
     }).then(() => {
-      expect(vm.$el.innerHTML).toBe(`<div>3</div> <!----> <pre><div>3</div></pre>`)
+      expect(vm.$el.innerHTML).toBe('<div>3</div> <!----> <pre><div>3</div></pre>')
       vm.n++
       vm.$refs.foo.ok = true
     }).then(() => {
-      expect(vm.$el.innerHTML).toBe(`<div>4</div> <div>4</div> <pre><div>4</div></pre>`)
+      expect(vm.$el.innerHTML).toBe('<div>4</div> <div>4</div> <pre><div>4</div></pre>')
     }).then(done)
   })
 
@@ -569,7 +569,7 @@ describe('Component slot', () => {
   it('events should not break when slot is toggled by v-if', done => {
     const spy = jasmine.createSpy()
     const vm = new Vue({
-      template: `<test><div class="click" @click="test">hi</div></test>`,
+      template: '<test><div class="click" @click="test">hi</div></test>',
       methods: {
         test: spy
       },
@@ -578,7 +578,7 @@ describe('Component slot', () => {
           data: () => ({
             toggle: true
           }),
-          template: `<div v-if="toggle"><slot></slot></div>`
+          template: '<div v-if="toggle"><slot></slot></div>'
         }
       }
     }).$mount()
@@ -598,7 +598,7 @@ describe('Component slot', () => {
 
   it('renders static tree with text', () => {
     const vm = new Vue({
-      template: `<div><test><template><div></div>Hello<div></div></template></test></div>`,
+      template: '<div><test><template><div></div>Hello<div></div></template></test></div>',
       components: {
         test: {
           template: '<div><slot></slot></div>'
@@ -620,7 +620,7 @@ describe('Component slot', () => {
       `,
       components: {
         parent: {
-          template: `<div><slot name="a"></slot><slot></slot></div>`
+          template: '<div><slot name="a"></slot><slot></slot></div>'
         },
         child: {
           functional: true,
@@ -636,16 +636,16 @@ describe('Component slot', () => {
   // #4209
   it('slot of multiple text nodes should not be infinitely merged', done => {
     const wrap = {
-      template: `<inner ref="inner">foo<slot></slot></inner>`,
+      template: '<inner ref="inner">foo<slot></slot></inner>',
       components: {
         inner: {
           data: () => ({ a: 1 }),
-          template: `<div>{{a}}<slot></slot></div>`
+          template: '<div>{{a}}<slot></slot></div>'
         }
       }
     }
     const vm = new Vue({
-      template: `<wrap ref="wrap">bar</wrap>`,
+      template: '<wrap ref="wrap">bar</wrap>',
       components: { wrap }
     }).$mount()
 
@@ -763,19 +763,19 @@ describe('Component slot', () => {
       components: {
         TestComponent,
         foo: {
-          template: `<div>foo</div>`
+          template: '<div>foo</div>'
         },
         bar: {
-          template: `<div>bar<slot/></div>`
+          template: '<div>bar<slot/></div>'
         }
       }
     }).$mount()
 
-    expect(vm.$el.innerHTML).toBe(`<b><div><div>foo</div></div> <div>bar<div>foo</div></div></b>`)
+    expect(vm.$el.innerHTML).toBe('<b><div><div>foo</div></div> <div>bar<div>foo</div></div></b>')
 
     vm.$refs.test.toggleEl = false
     waitForUpdate(() => {
-      expect(vm.$el.innerHTML).toBe(`<i><div><div>foo</div></div> <div>bar<div>foo</div></div></i>`)
+      expect(vm.$el.innerHTML).toBe('<i><div><div>foo</div></div> <div>bar<div>foo</div></div></i>')
     }).then(done)
   })
 
@@ -792,17 +792,17 @@ describe('Component slot', () => {
 
   it('passing a slot down as named slot', () => {
     const Bar = {
-      template: `<div class="bar"><slot name="foo"/></div>`
+      template: '<div class="bar"><slot name="foo"/></div>'
     }
 
     const Foo = {
       components: { Bar },
-      template: `<div class="foo"><bar><slot slot="foo"/></bar></div>`
+      template: '<div class="foo"><bar><slot slot="foo"/></bar></div>'
     }
 
     const vm = new Vue({
       components: { Foo },
-      template: `<div><foo>hello</foo></div>`
+      template: '<div><foo>hello</foo></div>'
     }).$mount()
 
     expect(vm.$el.innerHTML).toBe('<div class="foo"><div class="bar">hello</div></div>')
@@ -810,17 +810,17 @@ describe('Component slot', () => {
 
   it('fallback content for named template slot', () => {
     const Bar = {
-      template: `<div class="bar"><slot name="foo">fallback</slot></div>`
+      template: '<div class="bar"><slot name="foo">fallback</slot></div>'
     }
 
     const Foo = {
       components: { Bar },
-      template: `<div class="foo"><bar><template slot="foo"/><slot/></template></bar></div>`
+      template: '<div class="foo"><bar><template slot="foo"/><slot/></template></bar></div>'
     }
 
     const vm = new Vue({
       components: { Foo },
-      template: `<div><foo></foo></div>`
+      template: '<div><foo></foo></div>'
     }).$mount()
 
     expect(vm.$el.innerHTML).toBe('<div class="foo"><div class="bar">fallback</div></div>')
@@ -922,7 +922,7 @@ describe('Component slot', () => {
     }
 
     const vm = new Vue({
-      template: `<stateful ref="stateful"><div slot="named">foo</div></stateful>`,
+      template: '<stateful ref="stateful"><div slot="named">foo</div></stateful>',
       components: { Stateful }
     }).$mount()
 

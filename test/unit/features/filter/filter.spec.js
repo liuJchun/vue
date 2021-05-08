@@ -56,7 +56,7 @@ describe('Filters', () => {
 
   it('handle regex with pipe', () => {
     const vm = new Vue({
-      template: `<test ref="test" :pattern="/a|b\\// | identity"></test>`,
+      template: '<test ref="test" :pattern="/a|b\\// | identity"></test>',
       filters: { identity: v => v },
       components: {
         test: {
@@ -72,7 +72,7 @@ describe('Filters', () => {
   it('handle division', () => {
     const vm = new Vue({
       data: { a: 2 },
-      template: `<div>{{ 1/a / 4 | double }}</div>`,
+      template: '<div>{{ 1/a / 4 | double }}</div>',
       filters: { double: v => v * 2 }
     }).$mount()
     expect(vm.$el.textContent).toBe(String(1 / 4))
@@ -81,7 +81,7 @@ describe('Filters', () => {
   it('handle division with parenthesis', () => {
     const vm = new Vue({
       data: { a: 20 },
-      template: `<div>{{ (a*2) / 5 | double }}</div>`,
+      template: '<div>{{ (a*2) / 5 | double }}</div>',
       filters: { double: v => v * 2 }
     }).$mount()
     expect(vm.$el.textContent).toBe(String(16))
@@ -89,7 +89,7 @@ describe('Filters', () => {
 
   it('handle division with dot', () => {
     const vm = new Vue({
-      template: `<div>{{ 20. / 5 | double }}</div>`,
+      template: '<div>{{ 20. / 5 | double }}</div>',
       filters: { double: v => v * 2 }
     }).$mount()
     expect(vm.$el.textContent).toBe(String(8))
@@ -98,7 +98,7 @@ describe('Filters', () => {
   it('handle division with array values', () => {
     const vm = new Vue({
       data: { a: [20] },
-      template: `<div>{{ a[0] / 5 | double }}</div>`,
+      template: '<div>{{ a[0] / 5 | double }}</div>',
       filters: { double: v => v * 2 }
     }).$mount()
     expect(vm.$el.textContent).toBe(String(8))
@@ -107,7 +107,7 @@ describe('Filters', () => {
   it('handle division with hash values', () => {
     const vm = new Vue({
       data: { a: { n: 20 }},
-      template: `<div>{{ a['n'] / 5 | double }}</div>`,
+      template: '<div>{{ a[\'n\'] / 5 | double }}</div>',
       filters: { double: v => v * 2 }
     }).$mount()
     expect(vm.$el.textContent).toBe(String(8))
@@ -116,7 +116,7 @@ describe('Filters', () => {
   it('handle division with variable_', () => {
     const vm = new Vue({
       data: { a_: 8 },
-      template: `<div>{{ a_ / 2 | double }}</div>`,
+      template: '<div>{{ a_ / 2 | double }}</div>',
       filters: { double: v => v * 2 }
     }).$mount()
     expect(vm.$el.textContent).toBe(String(8))
@@ -124,7 +124,7 @@ describe('Filters', () => {
 
   it('arguments', () => {
     const vm = new Vue({
-      template: `<div>{{ msg | add(a, 3) }}</div>`,
+      template: '<div>{{ msg | add(a, 3) }}</div>',
       data: {
         msg: 1,
         a: 2
@@ -138,7 +138,7 @@ describe('Filters', () => {
 
   it('quotes', () => {
     const vm = new Vue({
-      template: `<div>{{ msg + "b | c" + 'd' | upper }}</div>`,
+      template: '<div>{{ msg + "b | c" + \'d\' | upper }}</div>',
       data: {
         msg: 'a'
       },
@@ -151,7 +151,7 @@ describe('Filters', () => {
 
   it('double pipe', () => {
     const vm = new Vue({
-      template: `<div>{{ b || msg | upper }}</div>`,
+      template: '<div>{{ b || msg | upper }}</div>',
       data: {
         b: false,
         msg: 'a'
@@ -165,7 +165,7 @@ describe('Filters', () => {
 
   it('object literal', () => {
     const vm = new Vue({
-      template: `<div>{{ { a: 123 } | pick('a') }}</div>`,
+      template: '<div>{{ { a: 123 } | pick(\'a\') }}</div>',
       filters: {
         pick: (v, key) => v[key]
       }
@@ -175,7 +175,7 @@ describe('Filters', () => {
 
   it('array literal', () => {
     const vm = new Vue({
-      template: `<div>{{ [1, 2, 3] | reverse }}</div>`,
+      template: '<div>{{ [1, 2, 3] | reverse }}</div>',
       filters: {
         reverse: arr => arr.reverse().join(',')
       }
@@ -197,7 +197,7 @@ describe('Filters', () => {
 
   it('bigint support', () => {
     const vm = new Vue({
-      template: `<div>{{ BigInt(BigInt(10000000)) + BigInt(2000000000n) * 3000000n }}</div>`
+      template: '<div>{{ BigInt(BigInt(10000000)) + BigInt(2000000000n) * 3000000n }}</div>'
     }).$mount()
     expect(vm.$el.textContent).toBe('6000000010000000')
   })

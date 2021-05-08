@@ -28,7 +28,7 @@ export default function model (
     if (tag === 'input' && type === 'file') {
       warn(
         `<${el.tag} v-model="${value}" type="file">:\n` +
-        `File inputs are read only. Use a v-on:change listener instead.`,
+        'File inputs are read only. Use a v-on:change listener instead.',
         el.rawAttrsMap['v-model']
       )
     }
@@ -53,7 +53,7 @@ export default function model (
   } else if (process.env.NODE_ENV !== 'production') {
     warn(
       `<${el.tag} v-model="${value}">: ` +
-      `v-model is not supported on this element type. ` +
+      'v-model is not supported on this element type. ' +
       'If you are working with contenteditable, it\'s recommended to ' +
       'wrap a library dedicated for that purpose inside a custom component.',
       el.rawAttrsMap['v-model']
@@ -113,9 +113,9 @@ function genSelect (
   modifiers: ?ASTModifiers
 ) {
   const number = modifiers && modifiers.number
-  const selectedVal = `Array.prototype.filter` +
-    `.call($event.target.options,function(o){return o.selected})` +
-    `.map(function(o){var val = "_value" in o ? o._value : o.value;` +
+  const selectedVal = 'Array.prototype.filter' +
+    '.call($event.target.options,function(o){return o.selected})' +
+    '.map(function(o){var val = "_value" in o ? o._value : o.value;' +
     `return ${number ? '_n(val)' : 'val'}})`
 
   const assignment = '$event.target.multiple ? $$selectedVal : $$selectedVal[0]'
@@ -156,7 +156,7 @@ function genDefaultModel (
 
   let valueExpression = '$event.target.value'
   if (trim) {
-    valueExpression = `$event.target.value.trim()`
+    valueExpression = '$event.target.value.trim()'
   }
   if (number) {
     valueExpression = `_n(${valueExpression})`

@@ -451,14 +451,14 @@ describe('Component keep-alive', () => {
 
   // #3882
   it('deeply nested keep-alive should be destroyed properly', done => {
-    one.template = `<div><keep-alive><two></two></keep-alive></div>`
+    one.template = '<div><keep-alive><two></two></keep-alive></div>'
     one.components = { two }
     const vm = new Vue({
-      template: `<div><parent v-if="ok"></parent></div>`,
+      template: '<div><parent v-if="ok"></parent></div>',
       data: { ok: true },
       components: {
         parent: {
-          template: `<div><keep-alive><one></one></keep-alive></div>`,
+          template: '<div><keep-alive><one></one></keep-alive></div>',
           components: { one }
         }
       }
@@ -478,11 +478,11 @@ describe('Component keep-alive', () => {
   it('should update latest props/listeners for a re-activated component', done => {
     const one = {
       props: ['prop'],
-      template: `<div>one {{ prop }}</div>`
+      template: '<div>one {{ prop }}</div>'
     }
     const two = {
       props: ['prop'],
-      template: `<div>two {{ prop }}</div>`
+      template: '<div>two {{ prop }}</div>'
     }
     const vm = new Vue({
       data: { view: 'one', n: 1 },
@@ -641,21 +641,21 @@ describe('Component keep-alive', () => {
 
   it('should warn unknown component inside', () => {
     new Vue({
-      template: `<keep-alive><foo/></keep-alive>`
+      template: '<keep-alive><foo/></keep-alive>'
     }).$mount()
-    expect(`Unknown custom element: <foo>`).toHaveBeenWarned()
+    expect('Unknown custom element: <foo>').toHaveBeenWarned()
   })
 
   // #6938
   it('should not cache anonymous component when include is specified', done => {
     const Foo = {
       name: 'foo',
-      template: `<div>foo</div>`,
+      template: '<div>foo</div>',
       created: jasmine.createSpy('foo')
     }
 
     const Bar = {
-      template: `<div>bar</div>`,
+      template: '<div>bar</div>',
       created: jasmine.createSpy('bar')
     }
 
@@ -702,12 +702,12 @@ describe('Component keep-alive', () => {
 
   it('should cache anonymous components if include is not specified', done => {
     const Foo = {
-      template: `<div>foo</div>`,
+      template: '<div>foo</div>',
       created: jasmine.createSpy('foo')
     }
 
     const Bar = {
-      template: `<div>bar</div>`,
+      template: '<div>bar</div>',
       created: jasmine.createSpy('bar')
     }
 
@@ -755,7 +755,7 @@ describe('Component keep-alive', () => {
   // #7105
   it('should not destroy active instance when pruning cache', done => {
     const Foo = {
-      template: `<div>foo</div>`,
+      template: '<div>foo</div>',
       destroyed: jasmine.createSpy('destroyed')
     }
     const vm = new Vue({

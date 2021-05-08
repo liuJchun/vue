@@ -3,12 +3,12 @@ import Vue from 'vue'
 describe('Options inheritAttrs', () => {
   it('should work', done => {
     const vm = new Vue({
-      template: `<foo :id="foo"/>`,
+      template: '<foo :id="foo"/>',
       data: { foo: 'foo' },
       components: {
         foo: {
           inheritAttrs: false,
-          template: `<div>foo</div>`
+          template: '<div>foo</div>'
         }
       }
     }).$mount()
@@ -21,12 +21,12 @@ describe('Options inheritAttrs', () => {
 
   it('with inner v-bind', done => {
     const vm = new Vue({
-      template: `<foo :id="foo"/>`,
+      template: '<foo :id="foo"/>',
       data: { foo: 'foo' },
       components: {
         foo: {
           inheritAttrs: false,
-          template: `<div><div v-bind="$attrs"></div></div>`
+          template: '<div><div v-bind="$attrs"></div></div>'
         }
       }
     }).$mount()

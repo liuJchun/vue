@@ -7,7 +7,7 @@ describe('Directive v-model dynamic input type', () => {
         inputType: null,
         test: 'b'
       },
-      template: `<input :type="inputType" v-model="test">`
+      template: '<input :type="inputType" v-model="test">'
     }).$mount()
     document.body.appendChild(vm.$el)
 
@@ -22,7 +22,7 @@ describe('Directive v-model dynamic input type', () => {
         type: null,
         test: 'b'
       },
-      template: `<input v-if="ok" :type="type" v-model="test"><div v-else>haha</div>`
+      template: '<input v-if="ok" :type="type" v-model="test"><div v-else>haha</div>'
     }).$mount()
     document.body.appendChild(vm.$el)
 
@@ -48,7 +48,7 @@ describe('Directive v-model dynamic input type', () => {
     }
     const vm = new Vue({
       data,
-      template: `<div v-if="ok">haha</div><input v-else :type="type" v-model="test">`
+      template: '<div v-if="ok">haha</div><input v-else :type="type" v-model="test">'
     }).$mount()
     document.body.appendChild(vm.$el)
     expect(vm.$el.textContent).toBe('haha')
@@ -65,7 +65,7 @@ describe('Directive v-model dynamic input type', () => {
         type: null,
         test: 'b'
       },
-      template: `<div v-if="foo">text</div><input v-else-if="bar" :type="type" v-model="test">`
+      template: '<div v-if="foo">text</div><input v-else-if="bar" :type="type" v-model="test">'
     }).$mount()
     document.body.appendChild(vm.$el)
 

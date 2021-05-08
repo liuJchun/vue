@@ -1,6 +1,6 @@
 const { red, yellow } = require('chalk')
 
-const prefix = `[vue-server-renderer-webpack-plugin]`
+const prefix = '[vue-server-renderer-webpack-plugin]'
 const warn = exports.warn = msg => console.error(red(`${prefix} ${msg}\n`))
 const tip = exports.tip = msg => console.log(yellow(`${prefix} ${msg}\n`))
 

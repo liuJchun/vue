@@ -159,14 +159,14 @@ describe('Directive v-bind', () => {
 
   it('.sync modifier', done => {
     const vm = new Vue({
-      template: `<test :foo-bar.sync="bar"/>`,
+      template: '<test :foo-bar.sync="bar"/>',
       data: {
         bar: 1
       },
       components: {
         test: {
           props: ['fooBar'],
-          template: `<div @click="$emit('update:fooBar', 2)">{{ fooBar }}</div>`
+          template: '<div @click="$emit(\'update:fooBar\', 2)">{{ fooBar }}</div>'
         }
       }
     }).$mount()
@@ -182,14 +182,14 @@ describe('Directive v-bind', () => {
 
   it('.sync modifier with kebab case event', done => {
     const vm = new Vue({
-      template: `<test ref="test" :foo-bar.sync="bar"/>`,
+      template: '<test ref="test" :foo-bar.sync="bar"/>',
       data: {
         bar: 1
       },
       components: {
         test: {
           props: ['fooBar'],
-          template: `<div>{{ fooBar }}</div>`,
+          template: '<div>{{ fooBar }}</div>',
           methods: {
             update () {
               this.$emit('update:foo-bar', 2)
@@ -231,7 +231,7 @@ describe('Directive v-bind', () => {
 
   it('bind object with explicit overrides', () => {
     const vm = new Vue({
-      template: `<test v-bind="test" data-foo="foo" dataBar="bar"/>`,
+      template: '<test v-bind="test" data-foo="foo" dataBar="bar"/>',
       components: {
         test: {
           template: '<div>{{ dataFoo }} {{ dataBar }}</div>',
@@ -250,7 +250,7 @@ describe('Directive v-bind', () => {
 
   it('.sync modifier with bind object', done => {
     const vm = new Vue({
-      template: `<test v-bind.sync="test"/>`,
+      template: '<test v-bind.sync="test"/>',
       data: {
         test: {
           fooBar: 1
@@ -259,7 +259,7 @@ describe('Directive v-bind', () => {
       components: {
         test: {
           props: ['fooBar'],
-          template: `<div @click="handleUpdate">{{ fooBar }}</div>`,
+          template: '<div @click="handleUpdate">{{ fooBar }}</div>',
           methods: {
             handleUpdate () {
               this.$emit('update:fooBar', 2)
@@ -478,7 +478,7 @@ describe('Directive v-bind', () => {
   describe('dynamic arguments', () => {
     it('basic', done => {
       const vm = new Vue({
-        template: `<div v-bind:[key]="value"></div>`,
+        template: '<div v-bind:[key]="value"></div>',
         data: {
           key: 'id',
           value: 'hello'
@@ -496,13 +496,13 @@ describe('Directive v-bind', () => {
         expect(vm.$el.id).toBe('')
         vm.key = undefined
       }).then(() => {
-        expect(`Invalid value for dynamic directive argument`).toHaveBeenWarned()
+        expect('Invalid value for dynamic directive argument').toHaveBeenWarned()
       }).then(done)
     })
 
     it('shorthand', done => {
       const vm = new Vue({
-        template: `<div :[key]="value"></div>`,
+        template: '<div :[key]="value"></div>',
         data: {
           key: 'id',
           value: 'hello'
@@ -517,7 +517,7 @@ describe('Directive v-bind', () => {
 
     it('with .prop modifier', done => {
       const vm = new Vue({
-        template: `<div :[key].prop="value"></div>`,
+        template: '<div :[key].prop="value"></div>',
         data: {
           key: 'id',
           value: 'hello'
@@ -533,7 +533,7 @@ describe('Directive v-bind', () => {
     if (process.env.VBIND_PROP_SHORTHAND) {
       it('.prop shorthand', done => {
         const vm = new Vue({
-          template: `<div .[key]="value"></div>`,
+          template: '<div .[key]="value"></div>',
           data: {
             key: 'id',
             value: 'hello'
@@ -549,7 +549,7 @@ describe('Directive v-bind', () => {
 
     it('handle class and style', () => {
       const vm = new Vue({
-        template: `<div :[key]="value" :[key2]="value2"></div>`,
+        template: '<div :[key]="value" :[key2]="value2"></div>',
         data: {
           key: 'class',
           value: ['hello', 'world'],
@@ -565,7 +565,7 @@ describe('Directive v-bind', () => {
 
     it('handle shouldUseProp', done => {
       const vm = new Vue({
-        template: `<input :[key]="value">`,
+        template: '<input :[key]="value">',
         data: {
           key: 'value',
           value: 'foo'
@@ -580,7 +580,7 @@ describe('Directive v-bind', () => {
 
     it('with .sync modifier', done => {
       const vm = new Vue({
-        template: `<foo ref="child" :[key].sync="value"/>`,
+        template: '<foo ref="child" :[key].sync="value"/>',
         data: {
           key: 'foo',
           value: 'bar'
@@ -588,7 +588,7 @@ describe('Directive v-bind', () => {
         components: {
           foo: {
             props: ['foo'],
-            template: `<div>{{ foo }}</div>`
+            template: '<div>{{ foo }}</div>'
           }
         }
       }).$mount()

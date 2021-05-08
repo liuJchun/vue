@@ -78,7 +78,7 @@ describe('Options el', () => {
 
   it('decode attribute value newlines when parsing templates from DOM in IE', () => {
     const el = document.createElement('div')
-    el.innerHTML = `<a :style="{\ncolor:'red'\n}"></a>`
+    el.innerHTML = '<a :style="{\ncolor:\'red\'\n}"></a>'
     const vm = new Vue({ el })
     expect(vm.$el.children[0].style.color).toBe('red')
   })

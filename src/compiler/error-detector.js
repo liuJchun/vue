@@ -61,7 +61,7 @@ function checkEvent (exp: string, text: string, warn: Function, range?: Range) {
   const keywordMatch: any = stripped.match(unaryOperatorsRE)
   if (keywordMatch && stripped.charAt(keywordMatch.index - 1) !== '$') {
     warn(
-      `avoid using JavaScript unary operator as property name: ` +
+      'avoid using JavaScript unary operator as property name: ' +
       `"${keywordMatch[0]}" in expression ${text.trim()}`,
       range
     )
@@ -99,7 +99,7 @@ function checkExpression (exp: string, text: string, warn: Function, range?: Ran
     const keywordMatch = exp.replace(stripStringRE, '').match(prohibitedKeywordRE)
     if (keywordMatch) {
       warn(
-        `avoid using JavaScript keyword as property name: ` +
+        'avoid using JavaScript keyword as property name: ' +
         `"${keywordMatch[0]}"\n  Raw expression: ${text.trim()}`,
         range
       )

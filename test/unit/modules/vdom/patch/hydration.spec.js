@@ -213,7 +213,7 @@ describe('vdom patch: hydration', () => {
     const Foo = resolve => setTimeout(() => {
       resolve({
         data: () => ({ msg: 'foo' }),
-        template: `<span>{{ msg }}</span>`
+        template: '<span>{{ msg }}</span>'
       })
     }, 0)
 
@@ -246,7 +246,7 @@ describe('vdom patch: hydration', () => {
         setTimeout(() => {
           resolve({
             data: () => ({ msg: 'foo' }),
-            template: `<span>{{ msg }}</span>`
+            template: '<span>{{ msg }}</span>'
           })
         }, 10)
       }),
@@ -314,9 +314,9 @@ describe('vdom patch: hydration', () => {
 
     new Vue({
       data: {
-        html: `<span>foo</span>`
+        html: '<span>foo</span>'
       },
-      template: `<div v-html="html">hello</div>`
+      template: '<div v-html="html">hello</div>'
     }).$mount(dom)
 
     expect('not matching server-rendered content').not.toHaveBeenWarned()
@@ -327,9 +327,9 @@ describe('vdom patch: hydration', () => {
 
     new Vue({
       data: {
-        html: `<span>foo</span>`
+        html: '<span>foo</span>'
       },
-      template: `<div v-html="html">hello</div>`
+      template: '<div v-html="html">hello</div>'
     }).$mount(dom)
 
     expect('not matching server-rendered content').toHaveBeenWarned()
@@ -339,7 +339,7 @@ describe('vdom patch: hydration', () => {
     const dom = createMockSSRDOM('<div>foo</div> hello')
 
     new Vue({
-      template: `<test>hello</test>`,
+      template: '<test>hello</test>',
       components: {
         test: {
           template: `
@@ -362,7 +362,7 @@ describe('vdom patch: hydration', () => {
       data: {
         style: { paddingLeft: '0px' }
       },
-      template: `<div><div :style="style"></div></div>`
+      template: '<div><div :style="style"></div></div>'
     }).$mount(dom)
 
     // should update
@@ -379,7 +379,7 @@ describe('vdom patch: hydration', () => {
       data: {
         cls: [{ foo: true }, 'bar']
       },
-      template: `<div><div :class="cls"></div></div>`
+      template: '<div><div :class="cls"></div></div>'
     }).$mount(dom)
 
     // should update

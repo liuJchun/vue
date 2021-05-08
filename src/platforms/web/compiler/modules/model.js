@@ -40,7 +40,7 @@ function preTransformNode (el: ASTElement, options: CompilerOptions) {
 
     if (typeBinding) {
       const ifCondition = getAndRemoveAttr(el, 'v-if', true)
-      const ifConditionExtra = ifCondition ? `&&(${ifCondition})` : ``
+      const ifConditionExtra = ifCondition ? `&&(${ifCondition})` : ''
       const hasElse = getAndRemoveAttr(el, 'v-else', true) != null
       const elseIfCondition = getAndRemoveAttr(el, 'v-else-if', true)
       // 1. checkbox

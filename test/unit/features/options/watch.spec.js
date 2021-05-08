@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import testObjectOption from '../../../helpers/test-object-option'
-import { finished } from 'stream';
+import { finished } from 'stream'
 
 describe('Options watch', () => {
   let spy
@@ -173,6 +173,6 @@ describe('Options watch', () => {
         prop1 () {}
       }
     })
-    expect(`Failed watching path`).not.toHaveBeenWarned()
+    expect('Failed watching path').not.toHaveBeenWarned()
   })
 })

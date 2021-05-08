@@ -132,7 +132,7 @@ export function createRenderer ({
         }
         return renderStream
       } else if (typeof template === 'function') {
-        throw new Error(`function template is only supported in renderToString.`)
+        throw new Error('function template is only supported in renderToString.')
       } else {
         const templateStream = templateRenderer.createStream(context)
         renderStream.on('error', err => {

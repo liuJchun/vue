@@ -15,10 +15,10 @@ import {
   extend,
   nextTick,
   mergeOptions,
-  defineReactive
+  defineReactive,
 } from '../util/index'
 
-export function initGlobalAPI (Vue: GlobalAPI) {
+export function initGlobalAPI(Vue: GlobalAPI) {
   // config
   const configDef = {}
   configDef.get = () => config
@@ -38,7 +38,7 @@ export function initGlobalAPI (Vue: GlobalAPI) {
     warn,
     extend,
     mergeOptions,
-    defineReactive
+    defineReactive,
   }
 
   Vue.set = set
@@ -46,13 +46,14 @@ export function initGlobalAPI (Vue: GlobalAPI) {
   Vue.nextTick = nextTick
 
   // 2.6 explicit observable API
+  // Vue支持对象监听
   Vue.observable = <T>(obj: T): T => {
     observe(obj)
     return obj
   }
 
   Vue.options = Object.create(null)
-  ASSET_TYPES.forEach(type => {
+  ASSET_TYPES.forEach((type) => {
     Vue.options[type + 's'] = Object.create(null)
   })
 
@@ -61,8 +62,9 @@ export function initGlobalAPI (Vue: GlobalAPI) {
   Vue.options._base = Vue
 
   extend(Vue.options.components, builtInComponents)
-
+  // 插件
   initUse(Vue)
+  // 混入
   initMixin(Vue)
   initExtend(Vue)
   initAssetRegisters(Vue)

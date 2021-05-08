@@ -290,7 +290,7 @@ describe('Directive v-model text', () => {
         foo: {
           props: ['model', 'value'],
           model: { prop: 'model', event: 'change' },
-          template: `<div/>`
+          template: '<div/>'
         }
       },
       template: `
@@ -445,7 +445,7 @@ describe('Directive v-model text', () => {
       const vm = new Vue({
         el,
         data: { foo: null },
-        template: `<textarea v-model="foo" placeholder="bar"></textarea>`
+        template: '<textarea v-model="foo" placeholder="bar"></textarea>'
       })
       setTimeout(() => {
         expect(vm.foo).toBe(null)
@@ -460,7 +460,7 @@ describe('Directive v-model text', () => {
       const vm = new Vue({
         el,
         data: { evtCount: 0 },
-        template: `<textarea placeholder="" @input="evtCount++"></textarea>`,
+        template: '<textarea placeholder="" @input="evtCount++"></textarea>',
       })
       triggerEvent(vm.$el, 'input')
       setTimeout(() => {

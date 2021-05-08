@@ -33,7 +33,7 @@ export function markOnce (
   index: number,
   key: string
 ) {
-  markStatic(tree, `__once__${index}${key ? `_${key}` : ``}`, true)
+  markStatic(tree, `__once__${index}${key ? `_${key}` : ''}`, true)
   return tree
 }
 

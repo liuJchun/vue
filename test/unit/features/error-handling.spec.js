@@ -42,8 +42,8 @@ describe('Error handling', () => {
   // error in mounted hook should affect neither child nor parent
   it('should recover from errors in mounted hook', done => {
     const vm = createTestInstance(components.mounted)
-    expect(`Error in mounted hook`).toHaveBeenWarned()
-    expect(`Error: mounted`).toHaveBeenWarned()
+    expect('Error in mounted hook').toHaveBeenWarned()
+    expect('Error: mounted').toHaveBeenWarned()
     assertBothInstancesActive(vm).then(done)
   })
 
@@ -112,7 +112,7 @@ describe('Error handling', () => {
     const vm = createTestInstance(components.userWatcherGetter)
     vm.n++
     waitForUpdate(() => {
-      expect(`Error in getter for watcher`).toHaveBeenWarned()
+      expect('Error in getter for watcher').toHaveBeenWarned()
       function getErrorMsg () {
         try {
           this.a.b.c
@@ -306,7 +306,7 @@ function createErrorTestComponents () {
     const key = 'directive ' + hook
     const dirComp = components[key] = {
       props: ['n'],
-      template: `<div v-foo="n">{{ n }}</div>`
+      template: '<div v-foo="n">{{ n }}</div>'
     }
     const dirFoo = {}
     dirFoo[hook] = function () {

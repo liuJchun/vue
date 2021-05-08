@@ -25,14 +25,14 @@ describe('vdom patch: element', () => {
     it('should warn unknown element', () => {
       const vnode = new VNode('unknown')
       patch(null, vnode)
-      expect(`Unknown custom element: <unknown>`).toHaveBeenWarned()
+      expect('Unknown custom element: <unknown>').toHaveBeenWarned()
     })
   }
 
   it('should warn unknown element with hyphen', () => {
     const vnode = new VNode('unknown-foo')
     patch(null, vnode)
-    expect(`Unknown custom element: <unknown-foo>`).toHaveBeenWarned()
+    expect('Unknown custom element: <unknown-foo>').toHaveBeenWarned()
   })
 
   it('should create an elements which having text content', () => {

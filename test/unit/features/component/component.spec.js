@@ -411,7 +411,7 @@ describe('Component', () => {
           view: true
         }
       },
-      template: `<div><test v-if="view">Test</test></div>`,
+      template: '<div><test v-if="view">Test</test></div>',
       components: {
         test: Test
       }

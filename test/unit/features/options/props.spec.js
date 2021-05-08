@@ -335,7 +335,7 @@ describe('Options props', () => {
 
   it('should work with v-bind', () => {
     const vm = new Vue({
-      template: `<test v-bind="{ a: 1, b: 2 }"></test>`,
+      template: '<test v-bind="{ a: 1, b: 2 }"></test>',
       components: {
         test: {
           props: ['a', 'b'],
@@ -381,8 +381,8 @@ describe('Options props', () => {
         }
       }
     }).$mount()
-    expect(`Method "a" has already been defined as a prop`).toHaveBeenWarned()
-    expect(`Avoid mutating a prop directly`).toHaveBeenWarned()
+    expect('Method "a" has already been defined as a prop').toHaveBeenWarned()
+    expect('Avoid mutating a prop directly').toHaveBeenWarned()
   })
 
   it('treat boolean props properly', () => {
@@ -499,7 +499,7 @@ describe('Options props', () => {
   it('should not trigger watcher on default value', done => {
     const spy = jasmine.createSpy()
     const vm = new Vue({
-      template: `<test :value="a" :test="b"></test>`,
+      template: '<test :value="a" :test="b"></test>',
       data: {
         a: 1,
         b: undefined

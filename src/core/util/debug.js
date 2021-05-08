@@ -50,7 +50,7 @@ if (process.env.NODE_ENV !== 'production') {
     }
 
     return (
-      (name ? `<${classify(name)}>` : `<Anonymous>`) +
+      (name ? `<${classify(name)}>` : '<Anonymous>') +
       (file && includeFile !== false ? ` at ${file}` : '')
     )
   }

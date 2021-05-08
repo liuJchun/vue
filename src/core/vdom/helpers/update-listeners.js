@@ -39,11 +39,11 @@ export function createFnInvoker (fns: Function | Array<Function>, vm: ?Component
     if (Array.isArray(fns)) {
       const cloned = fns.slice()
       for (let i = 0; i < cloned.length; i++) {
-        invokeWithErrorHandling(cloned[i], null, arguments, vm, `v-on handler`)
+        invokeWithErrorHandling(cloned[i], null, arguments, vm, 'v-on handler')
       }
     } else {
       // return handler return value for single handlers
-      return invokeWithErrorHandling(fns, null, arguments, vm, `v-on handler`)
+      return invokeWithErrorHandling(fns, null, arguments, vm, 'v-on handler')
     }
   }
   invoker.fns = fns

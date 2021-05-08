@@ -102,7 +102,7 @@ export function createCompileToFunctionFn (compile: Function): Function {
     if (process.env.NODE_ENV !== 'production') {
       if ((!compiled.errors || !compiled.errors.length) && fnGenErrors.length) {
         warn(
-          `Failed to generate render function:\n\n` +
+          'Failed to generate render function:\n\n' +
           fnGenErrors.map(({ err, code }) => `${err.toString()} in\n\n${code}\n`).join('\n'),
           vm
         )

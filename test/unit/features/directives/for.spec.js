@@ -127,22 +127,22 @@ describe('Directive v-for', () => {
   if (hasSymbol) {
     it('should render native iterables (Map)', () => {
       const vm = new Vue({
-        template: `<div><span v-for="[key, val] in list">{{key}},{{val}}</span></div>`,
+        template: '<div><span v-for="[key, val] in list">{{key}},{{val}}</span></div>',
         data: {
           list: new Map([[1, 'foo'], [2, 'bar']])
         }
       }).$mount()
-      expect(vm.$el.innerHTML).toBe(`<span>1,foo</span><span>2,bar</span>`)
+      expect(vm.$el.innerHTML).toBe('<span>1,foo</span><span>2,bar</span>')
     })
 
     it('should render native iterables (Set)', () => {
       const vm = new Vue({
-        template: `<div><span v-for="val in list">{{val}}</span></div>`,
+        template: '<div><span v-for="val in list">{{val}}</span></div>',
         data: {
           list: new Set([1, 2, 3])
         }
       }).$mount()
-      expect(vm.$el.innerHTML).toBe(`<span>1</span><span>2</span><span>3</span>`)
+      expect(vm.$el.innerHTML).toBe('<span>1</span><span>2</span><span>3</span>')
     })
 
     it('should render iterable of primitive values', done => {
@@ -629,7 +629,7 @@ describe('Directive v-for', () => {
     const warn = console.warn
     console.warn = jasmine.createSpy()
     new Vue({
-      template: `<div><test v-for="i in 3"></test></div>`,
+      template: '<div><test v-for="i in 3"></test></div>',
       components: {
         test: {
           render () {}
@@ -637,7 +637,7 @@ describe('Directive v-for', () => {
       }
     }).$mount()
     expect(console.warn.calls.argsFor(0)[0]).toContain(
-      `<test v-for="i in 3">: component lists rendered with v-for should have explicit keys`
+      '<test v-for="i in 3">: component lists rendered with v-for should have explicit keys'
     )
     console.warn = warn
   })

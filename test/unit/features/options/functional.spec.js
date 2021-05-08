@@ -102,7 +102,7 @@ describe('Options functional', () => {
 
   it('should support returning more than one root node', () => {
     const vm = new Vue({
-      template: `<div><test></test></div>`,
+      template: '<div><test></test></div>',
       components: {
         test: {
           functional: true,
@@ -218,7 +218,7 @@ describe('Options functional', () => {
       }
     }
     const vm = new Vue({
-      template: `<div><foo/></div>`,
+      template: '<div><foo/></div>',
       components: { Foo }
     }).$mount()
     expect(vm.$el.innerHTML).toBe('<span>hi</span>')
@@ -226,7 +226,7 @@ describe('Options functional', () => {
 
   it('should work when used as named slot and returning array', () => {
     const Foo = {
-      template: `<div><slot name="test"/></div>`
+      template: '<div><slot name="test"/></div>'
     }
 
     const Bar = {
@@ -244,7 +244,7 @@ describe('Options functional', () => {
     }
 
     const vm = new Vue({
-      template: `<foo><bar slot="test"/></foo>`,
+      template: '<foo><bar slot="test"/></foo>',
       components: { Foo, Bar }
     }).$mount()
 
@@ -257,7 +257,7 @@ describe('Options functional', () => {
       render: h => ([h('foo'), h('bar')])
     }
     const vm = new Vue({
-      template: `<svg><child/></svg>`,
+      template: '<svg><child/></svg>',
       components: { Child }
     }).$mount()
 
@@ -323,15 +323,15 @@ describe('Options functional', () => {
 
     function assertMarkup () {
       expect(parent.$el.innerHTML).toBe(
-        `<div>` +
+        '<div>' +
           `<h2 class="red">${parent.msg}</h2>` +
           `<span>${parent.msg}</span> ` +
-          `<div>Second slot</div>` +
+          '<div>Second slot</div>' +
           parent.msg +
           // static
-          `<div>Some <span>text</span></div>` +
-          `<div class="clickable">click me</div>` +
-        `</div>`
+          '<div>Some <span>text</span></div>' +
+          '<div class="clickable">click me</div>' +
+        '</div>'
       )
     }
 
@@ -352,7 +352,7 @@ describe('Options functional', () => {
       }
     }
     const vm = new Vue({
-      template: `<div><foo v-for="name in names" :name="name" /></div>`,
+      template: '<div><foo v-for="name in names" :name="name" /></div>',
       data: {
         names: ['foo', 'bar']
       },

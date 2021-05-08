@@ -53,7 +53,7 @@ describe('Directive v-on', () => {
     const spy = jasmine.createSpy()
     vm = new Vue({
       el,
-      template: `<div class="test" @click="function (e) { log(e.target.className) }"></div>`,
+      template: '<div class="test" @click="function (e) { log(e.target.className) }"></div>',
       methods: {
         log: spy
       }
@@ -182,7 +182,7 @@ describe('Directive v-on', () => {
   it('should support once and other modifiers', () => {
     vm = new Vue({
       el,
-      template: `<div @click.once.self="foo"><span/></div>`,
+      template: '<div @click.once.self="foo"><span/></div>',
       methods: { foo: spy }
     })
     triggerEvent(vm.$el.firstChild, 'click')
@@ -196,7 +196,7 @@ describe('Directive v-on', () => {
   it('should support keyCode', () => {
     vm = new Vue({
       el,
-      template: `<input @keyup.enter="foo">`,
+      template: '<input @keyup.enter="foo">',
       methods: { foo: spy }
     })
     triggerEvent(vm.$el, 'keyup', e => {
@@ -208,7 +208,7 @@ describe('Directive v-on', () => {
   it('should support automatic key name inference', () => {
     vm = new Vue({
       el,
-      template: `<input @keyup.arrow-right="foo">`,
+      template: '<input @keyup.arrow-right="foo">',
       methods: { foo: spy }
     })
     triggerEvent(vm.$el, 'keyup', e => {
@@ -310,7 +310,7 @@ describe('Directive v-on', () => {
   it('should support number keyCode', () => {
     vm = new Vue({
       el,
-      template: `<input @keyup.13="foo">`,
+      template: '<input @keyup.13="foo">',
       methods: { foo: spy }
     })
     triggerEvent(vm.$el, 'keyup', e => {
@@ -395,7 +395,7 @@ describe('Directive v-on', () => {
     Vue.config.keyCodes.test = 1
     vm = new Vue({
       el,
-      template: `<input @keyup.test="foo">`,
+      template: '<input @keyup.test="foo">',
       methods: { foo: spy }
     })
     triggerEvent(vm.$el, 'keyup', e => {
@@ -409,7 +409,7 @@ describe('Directive v-on', () => {
     Vue.config.keyCodes.up = [1, 87]
     vm = new Vue({
       el,
-      template: `<input @keyup.up="foo" @keyup.down="foo">`,
+      template: '<input @keyup.up="foo" @keyup.down="foo">',
       methods: { foo: spy }
     })
     triggerEvent(vm.$el, 'keyup', e => {
@@ -470,7 +470,7 @@ describe('Directive v-on', () => {
     })
 
     triggerEvent(vm.$el, 'click')
-    expect(`The .native modifier for v-on is only valid on components but it was used on <button>.`).toHaveBeenWarned()
+    expect('The .native modifier for v-on is only valid on components but it was used on <button>.').toHaveBeenWarned()
     expect(spy.calls.count()).toBe(0)
   })
 
@@ -484,8 +484,8 @@ describe('Directive v-on', () => {
     })
 
     triggerEvent(vm.$el, 'click')
-    expect(`The .native modifier for v-on is only valid on components but it was used on <div>.`).not.toHaveBeenWarned()
-    expect(spy.calls.allArgs()).toEqual([['regular']]); // Regular @click should work for dynamic components resolved to native HTML elements.
+    expect('The .native modifier for v-on is only valid on components but it was used on <div>.').not.toHaveBeenWarned()
+    expect(spy.calls.allArgs()).toEqual([['regular']]) // Regular @click should work for dynamic components resolved to native HTML elements.
   })
 
   it('.once modifier should work with child components', () => {
@@ -648,9 +648,9 @@ describe('Directive v-on', () => {
     vm = new Vue({
       el,
       data: { none: null },
-      template: `<div @click="none"></div>`
+      template: '<div @click="none"></div>'
     })
-    expect(`Invalid handler for event "click": got null`).toHaveBeenWarned()
+    expect('Invalid handler for event "click": got null').toHaveBeenWarned()
     expect(() => {
       triggerEvent(vm.$el, 'click')
     }).not.toThrow()
@@ -753,7 +753,7 @@ describe('Directive v-on', () => {
   it('should transform click.right to contextmenu', () => {
     const spy = jasmine.createSpy('click.right')
     const vm = new Vue({
-      template: `<div @click.right="foo"></div>`,
+      template: '<div @click.right="foo"></div>',
       methods: { foo: spy }
     }).$mount()
 
@@ -765,7 +765,7 @@ describe('Directive v-on', () => {
     const spy = jasmine.createSpy('click.middle')
     vm = new Vue({
       el,
-      template: `<div @click.middle="foo"></div>`,
+      template: '<div @click.middle="foo"></div>',
       methods: { foo: spy }
     })
     triggerEvent(vm.$el, 'mouseup', e => { e.button = 0 })
@@ -779,7 +779,7 @@ describe('Directive v-on', () => {
     const mouseup = jasmine.createSpy('mouseup')
     vm = new Vue({
       el,
-      template: `<button v-on="listeners">foo</button>`,
+      template: '<button v-on="listeners">foo</button>',
       created () {
         this.listeners = {
           click,
@@ -803,7 +803,7 @@ describe('Directive v-on', () => {
     const mouseup = jasmine.createSpy('mouseup')
     vm = new Vue({
       el,
-      template: `<button v-on="listeners" @click="click2">foo</button>`,
+      template: '<button v-on="listeners" @click="click2">foo</button>',
       created () {
         this.listeners = {
           click: click1,
@@ -913,16 +913,16 @@ describe('Directive v-on', () => {
 
   it('warn object syntax with modifier', () => {
     new Vue({
-      template: `<button v-on.self="{}"></button>`
+      template: '<button v-on.self="{}"></button>'
     }).$mount()
-    expect(`v-on without argument does not support modifiers`).toHaveBeenWarned()
+    expect('v-on without argument does not support modifiers').toHaveBeenWarned()
   })
 
   it('warn object syntax with non-object value', () => {
     new Vue({
-      template: `<button v-on="123"></button>`
+      template: '<button v-on="123"></button>'
     }).$mount()
-    expect(`v-on without argument expects an Object value`).toHaveBeenWarned()
+    expect('v-on without argument expects an Object value').toHaveBeenWarned()
   })
 
   it('should correctly remove once listener', done => {
@@ -956,7 +956,7 @@ describe('Directive v-on', () => {
   it('handler should return the return value of inline function invocation', () => {
     let value
     new Vue({
-      template: `<test @foo="bar()"></test>`,
+      template: '<test @foo="bar()"></test>',
       methods: {
         bar() {
           return 1
@@ -991,7 +991,7 @@ describe('Directive v-on', () => {
     it('basic', done => {
       const spy = jasmine.createSpy()
       const vm = new Vue({
-        template: `<div v-on:[key]="spy"></div>`,
+        template: '<div v-on:[key]="spy"></div>',
         data: {
           key: 'click'
         },
@@ -1020,7 +1020,7 @@ describe('Directive v-on', () => {
     it('shorthand', done => {
       const spy = jasmine.createSpy()
       const vm = new Vue({
-        template: `<div @[key]="spy"></div>`,
+        template: '<div @[key]="spy"></div>',
         data: {
           key: 'click'
         },
@@ -1042,7 +1042,7 @@ describe('Directive v-on', () => {
     it('with .middle modifier', () => {
       const spy = jasmine.createSpy()
       const vm = new Vue({
-        template: `<div @[key].middle="spy"></div>`,
+        template: '<div @[key].middle="spy"></div>',
         data: {
           key: 'click'
         },
@@ -1059,7 +1059,7 @@ describe('Directive v-on', () => {
     it('with .right modifier', () => {
       const spy = jasmine.createSpy()
       const vm = new Vue({
-        template: `<div @[key].right="spy"></div>`,
+        template: '<div @[key].right="spy"></div>',
         data: {
           key: 'click'
         },
@@ -1093,7 +1093,7 @@ describe('Directive v-on', () => {
 
     it('with .once modifier', () => {
       const vm = new Vue({
-        template: `<div @[key].once="foo"></div>`,
+        template: '<div @[key].once="foo"></div>',
         data: { key: 'click' },
         methods: { foo: spy }
       }).$mount()

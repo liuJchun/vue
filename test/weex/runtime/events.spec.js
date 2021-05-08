@@ -38,7 +38,7 @@ describe('generate events', () => {
   })
 
   it('should be bound and fired by custom component', (done) => {
-    const { render, staticRenderFns } = compileAndStringify(`<text>Hello {{x}}</text>`)
+    const { render, staticRenderFns } = compileAndStringify('<text>Hello {{x}}</text>')
     compileAndExecute(`
       <div>
         <text>Hello {{x}}</text>

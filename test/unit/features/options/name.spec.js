@@ -43,6 +43,6 @@ describe('Options name', () => {
       name: 'my-컴포넌트'
     })
 
-    expect(`Invalid component name`).not.toHaveBeenWarned()
+    expect('Invalid component name').not.toHaveBeenWarned()
   })
 })

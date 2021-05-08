@@ -63,7 +63,7 @@ describe('Options template', () => {
 
   it('should not warn $ prefixed keywords', () => {
     new Vue({
-      template: `<div @click="$delete(foo, 'bar')"></div>`
+      template: '<div @click="$delete(foo, \'bar\')"></div>'
     }).$mount()
     expect('avoid using JavaScript keyword as property name').not.toHaveBeenWarned()
   })
@@ -80,12 +80,12 @@ describe('Options template', () => {
 
   it('warn error in generated function (v-on)', () => {
     new Vue({
-      template: `<div @click="delete('Delete')"></div>`,
+      template: '<div @click="delete(\'Delete\')"></div>',
       methods: { delete: function () {} }
     }).$mount()
     expect('Error compiling template').toHaveBeenWarned()
     expect(
-      `avoid using JavaScript unary operator as property name: "delete()" in expression @click="delete('Delete')"`
+      'avoid using JavaScript unary operator as property name: "delete()" in expression @click="delete(\'Delete\')"'
     ).toHaveBeenWarned()
   })
 })

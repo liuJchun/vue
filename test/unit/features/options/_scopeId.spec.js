@@ -45,7 +45,7 @@ describe('Options _scopeId', () => {
   it('should not discard parent scopeId when component root element is replaced', done => {
     const vm = new Vue({
       _scopeId: 'data-1',
-      template: `<div><child ref="child" /></div>`,
+      template: '<div><child ref="child" /></div>',
       components: {
         child: {
           _scopeId: 'data-2',

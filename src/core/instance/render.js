@@ -40,10 +40,10 @@ export function initRender (vm: Component) {
   /* istanbul ignore else */
   if (process.env.NODE_ENV !== 'production') {
     defineReactive(vm, '$attrs', parentData && parentData.attrs || emptyObject, () => {
-      !isUpdatingChildComponent && warn(`$attrs is readonly.`, vm)
+      !isUpdatingChildComponent && warn('$attrs is readonly.', vm)
     }, true)
     defineReactive(vm, '$listeners', options._parentListeners || emptyObject, () => {
-      !isUpdatingChildComponent && warn(`$listeners is readonly.`, vm)
+      !isUpdatingChildComponent && warn('$listeners is readonly.', vm)
     }, true)
   } else {
     defineReactive(vm, '$attrs', parentData && parentData.attrs || emptyObject, null, true)
@@ -90,7 +90,7 @@ export function renderMixin (Vue: Class<Component>) {
       currentRenderingInstance = vm
       vnode = render.call(vm._renderProxy, vm.$createElement)
     } catch (e) {
-      handleError(e, vm, `render`)
+      handleError(e, vm, 'render')
       // return error render result,
       // or previous vnode to prevent render error causing blank component
       /* istanbul ignore else */
@@ -98,7 +98,7 @@ export function renderMixin (Vue: Class<Component>) {
         try {
           vnode = vm.$options.renderError.call(vm._renderProxy, vm.$createElement, e)
         } catch (e) {
-          handleError(e, vm, `renderError`)
+          handleError(e, vm, 'renderError')
           vnode = vm._vnode
         }
       } else {

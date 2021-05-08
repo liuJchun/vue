@@ -86,7 +86,7 @@ describe('SSR: renderToStream', () => {
       _scopeId: '_component1'
     })
     const component2 = new Vue({
-      template: `<div></div>`,
+      template: '<div></div>',
       _scopeId: '_component2'
     })
     const stream1 = renderToStream(component1)

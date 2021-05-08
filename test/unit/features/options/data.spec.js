@@ -87,7 +87,7 @@ describe('Options data', () => {
       }
     }
     const vm = new Vue({
-      template: `<test ref="test" :a="1"></test>`,
+      template: '<test ref="test" :a="1"></test>',
       components: { Test }
     }).$mount()
     expect(vm.$refs.test.b).toBe(1)
@@ -96,14 +96,14 @@ describe('Options data', () => {
   it('props should not be reactive', done => {
     let calls = 0
     const vm = new Vue({
-      template: `<child :msg="msg"></child>`,
+      template: '<child :msg="msg"></child>',
       data: {
         msg: 'hello'
       },
       beforeUpdate () { calls++ },
       components: {
         child: {
-          template: `<span>{{ localMsg }}</span>`,
+          template: '<span>{{ localMsg }}</span>',
           props: ['msg'],
           data () {
             return { localMsg: this.msg }

@@ -151,7 +151,7 @@ describe('Scheduler', () => {
   it('emit should work when updated hook called', done => {
     const el = document.createElement('div')
     const vm = new Vue({
-      template: `<div><child @change="bar" :foo="foo"></child></div>`,
+      template: '<div><child @change="bar" :foo="foo"></child></div>',
       data: {
         foo: 0
       },
@@ -160,7 +160,7 @@ describe('Scheduler', () => {
       },
       components: {
         child: {
-          template: `<div>{{foo}}</div>`,
+          template: '<div>{{foo}}</div>',
           props: ['foo'],
           updated () {
             this.$emit('change')

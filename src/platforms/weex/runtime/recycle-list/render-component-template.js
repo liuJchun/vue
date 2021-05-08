@@ -22,12 +22,12 @@ export function renderRecyclableComponentTemplate (vnode: MountedComponentVNode)
     try {
       return render.call(vm)
     } catch (err) {
-      handleError(err, vm, `@render`)
+      handleError(err, vm, '@render')
     }
   } else {
     warn(
-      `@render function not defined on component used in <recycle-list>. ` +
-      `Make sure to declare \`recyclable="true"\` on the component's template.`,
+      '@render function not defined on component used in <recycle-list>. ' +
+      'Make sure to declare `recyclable="true"` on the component\'s template.',
       vm
     )
   }

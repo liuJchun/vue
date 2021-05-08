@@ -101,7 +101,7 @@ function flushSchedulerQueue () {
           'You may have an infinite update loop ' + (
             watcher.user
               ? `in watcher with expression "${watcher.expression}"`
-              : `in a component render function.`
+              : 'in a component render function.'
           ),
           watcher.vm
         )

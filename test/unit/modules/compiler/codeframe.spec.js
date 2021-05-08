@@ -12,8 +12,8 @@ describe('codeframe', () => {
     `.trim()
 
   it('line near top', () => {
-    const keyStart = source.indexOf(`key="one"`)
-    const keyEnd = keyStart + `key="one"`.length
+    const keyStart = source.indexOf('key="one"')
+    const keyEnd = keyStart + 'key="one"'.length
     expect(generateCodeFrame(source, keyStart, keyEnd)).toBe(`
 1  |  <div>
 2  |    <template key="one"></template>
@@ -25,8 +25,8 @@ describe('codeframe', () => {
 
   it('line in middle', () => {
     // should cover 5 lines
-    const forStart = source.indexOf(`v-for=`)
-    const forEnd = forStart + `v-for="foobar"`.length
+    const forStart = source.indexOf('v-for=')
+    const forEnd = forStart + 'v-for="foobar"'.length
     expect(generateCodeFrame(source, forStart, forEnd)).toBe(`
 2  |    <template key="one"></template>
 3  |    <ul>
@@ -38,8 +38,8 @@ describe('codeframe', () => {
   })
 
   it('line near bottom', () => {
-    const keyStart = source.indexOf(`key="two"`)
-    const keyEnd = keyStart + `key="two"`.length
+    const keyStart = source.indexOf('key="two"')
+    const keyEnd = keyStart + 'key="two"'.length
     expect(generateCodeFrame(source, keyStart, keyEnd)).toBe(`
 4  |      <li v-for="foobar">hi</li>
 5  |    </ul>
@@ -58,8 +58,8 @@ attr
 </div>
     `.trim()
 
-    const attrStart = source.indexOf(`attr=`)
-    const attrEnd = source.indexOf(`">`) + 1
+    const attrStart = source.indexOf('attr=')
+    const attrEnd = source.indexOf('">') + 1
     expect(generateCodeFrame(source, attrStart, attrEnd)).toBe(`
 1  |  <div attr="some
    |       ^^^^^^^^^^

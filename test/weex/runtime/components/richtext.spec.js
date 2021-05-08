@@ -339,7 +339,7 @@ describe('richtext component', () => {
         <richtext>
           <span>{{name}}</span>
         </richtext>
-      `, `data: { name: 'ABCDEFG' }`)).toEqual({
+      `, 'data: { name: \'ABCDEFG\' }')).toEqual({
         type: 'richtext',
         attr: {
           value: [{

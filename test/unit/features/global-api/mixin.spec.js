@@ -41,7 +41,7 @@ describe('Global API: mixin', () => {
   // #3957
   it('should work for global props', () => {
     const Test = Vue.extend({
-      template: `<div>{{ prop }}</div>`
+      template: '<div>{{ prop }}</div>'
     })
 
     Vue.mixin({

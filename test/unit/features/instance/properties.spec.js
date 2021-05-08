@@ -58,7 +58,7 @@ describe('Instance properties', () => {
     const calls = []
     const makeOption = name => ({
       name,
-      template: `<div><slot></slot></div>`,
+      template: '<div><slot></slot></div>',
       created () {
         calls.push(`${name}:${this.$parent.$options.name}`)
       }
@@ -120,20 +120,20 @@ describe('Instance properties', () => {
       }
     }
     new Vue({
-      template: `<comp ref="comp" msg="foo" />`,
+      template: '<comp ref="comp" msg="foo" />',
       components: { Comp }
     }).$mount()
-    expect(`Avoid mutating a prop`).toHaveBeenWarned()
+    expect('Avoid mutating a prop').toHaveBeenWarned()
   })
 
   it('$attrs', done => {
     const vm = new Vue({
-      template: `<foo :id="foo" bar="1"/>`,
+      template: '<foo :id="foo" bar="1"/>',
       data: { foo: 'foo' },
       components: {
         foo: {
           props: ['bar'],
-          template: `<div><div v-bind="$attrs"></div></div>`
+          template: '<div><div v-bind="$attrs"></div></div>'
         }
       }
     }).$mount()
@@ -149,11 +149,11 @@ describe('Instance properties', () => {
   // #6263
   it('$attrs should not be undefined when no props passed in', () => {
     const vm = new Vue({
-      template: `<foo ref="foo" />`,
+      template: '<foo ref="foo" />',
       data: { foo: 'foo' },
       components: {
         foo: {
-          template: `<div>foo</div>`
+          template: '<div>foo</div>'
         }
       }
     }).$mount()
@@ -163,18 +163,18 @@ describe('Instance properties', () => {
   it('warn mutating $attrs', () => {
     const vm = new Vue()
     vm.$attrs = {}
-    expect(`$attrs is readonly`).toHaveBeenWarned()
+    expect('$attrs is readonly').toHaveBeenWarned()
   })
 
   it('$listeners', done => {
     const spyA = jasmine.createSpy('A')
     const spyB = jasmine.createSpy('B')
     const vm = new Vue({
-      template: `<foo @click="foo"/>`,
+      template: '<foo @click="foo"/>',
       data: { foo: spyA },
       components: {
         foo: {
-          template: `<div v-on="$listeners"></div>`
+          template: '<div v-on="$listeners"></div>'
         }
       }
     }).$mount()
@@ -198,6 +198,6 @@ describe('Instance properties', () => {
   it('warn mutating $listeners', () => {
     const vm = new Vue()
     vm.$listeners = {}
-    expect(`$listeners is readonly`).toHaveBeenWarned()
+    expect('$listeners is readonly').toHaveBeenWarned()
   })
 })

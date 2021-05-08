@@ -1,4 +1,5 @@
 /* @flow */
+// flow 注释必须在第一行
 
 import config from 'core/config'
 import { warn, cached } from 'core/util/index'
@@ -7,14 +8,19 @@ import { mark, measure } from 'core/util/perf'
 import Vue from './runtime/index'
 import { query } from './util/index'
 import { compileToFunctions } from './compiler/index'
-import { shouldDecodeNewlines, shouldDecodeNewlinesForHref } from './util/compat'
+import {
+  shouldDecodeNewlines,
+  shouldDecodeNewlinesForHref,
+} from './util/compat'
 
-const idToTemplate = cached(id => {
+const idToTemplate = cached((id) => {
   const el = query(id)
   return el && el.innerHTML
 })
 
 const mount = Vue.prototype.$mount
+
+// 重写 $mount 方法
 Vue.prototype.$mount = function (
   el?: string | Element,
   hydrating?: boolean
@@ -22,15 +28,19 @@ Vue.prototype.$mount = function (
   el = el && query(el)
 
   /* istanbul ignore if */
+  // 不能挂载到 body html 节点
   if (el === document.body || el === document.documentElement) {
-    process.env.NODE_ENV !== 'production' && warn(
-      `Do not mount Vue to <html> or <body> - mount to normal elements instead.`
-    )
+    process.env.NODE_ENV !== 'production' &&
+      warn(
+        'Do not mount Vue to <html> or <body> - mount to normal elements instead.'
+      )
     return this
   }
 
   const options = this.$options
   // resolve template/el and convert to render function
+  // 如果不存在 render 方法 , 将 template 转化成 render方法
+  // 如果同时存在template, 优先执行 render 方法
   if (!options.render) {
     let template = options.template
     if (template) {
@@ -62,13 +72,17 @@ Vue.prototype.$mount = function (
         mark('compile')
       }
 
-      const { render, staticRenderFns } = compileToFunctions(template, {
-        outputSourceRange: process.env.NODE_ENV !== 'production',
-        shouldDecodeNewlines,
-        shouldDecodeNewlinesForHref,
-        delimiters: options.delimiters,
-        comments: options.comments
-      }, this)
+      const { render, staticRenderFns } = compileToFunctions(
+        template,
+        {
+          outputSourceRange: process.env.NODE_ENV !== 'production',
+          shouldDecodeNewlines,
+          shouldDecodeNewlinesForHref,
+          delimiters: options.delimiters,
+          comments: options.comments,
+        },
+        this
+      )
       options.render = render
       options.staticRenderFns = staticRenderFns
 
@@ -86,7 +100,7 @@ Vue.prototype.$mount = function (
  * Get outerHTML of elements, taking care
  * of SVG elements in IE as well.
  */
-function getOuterHTML (el: Element): string {
+function getOuterHTML(el: Element): string {
   if (el.outerHTML) {
     return el.outerHTML
   } else {

@@ -156,7 +156,7 @@ describe('ref', () => {
   it('should work with v-for on dynamic component', done => {
     components.test3 = {
       id: 'test3',
-      template: `<test1 v-if="!normal"></test1><div v-else>test3</div>`,
+      template: '<test1 v-if="!normal"></test1><div v-else>test3</div>',
       data () {
         return { normal: false }
       },

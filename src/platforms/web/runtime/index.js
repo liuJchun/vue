@@ -12,7 +12,7 @@ import {
   isReservedTag,
   isReservedAttr,
   getTagNamespace,
-  isUnknownElement
+  isUnknownElement,
 } from 'web/util/index'
 
 import { patch } from './patch'
@@ -34,6 +34,7 @@ extend(Vue.options.components, platformComponents)
 Vue.prototype.__patch__ = inBrowser ? patch : noop
 
 // public mount method
+// 公共 mount 方法 会在其他版本中重写此方法
 Vue.prototype.$mount = function (
   el?: string | Element,
   hydrating?: boolean
@@ -55,19 +56,20 @@ if (inBrowser) {
       ) {
         console[console.info ? 'info' : 'log'](
           'Download the Vue Devtools extension for a better development experience:\n' +
-          'https://github.com/vuejs/vue-devtools'
+            'https://github.com/vuejs/vue-devtools'
         )
       }
     }
-    if (process.env.NODE_ENV !== 'production' &&
+    if (
+      process.env.NODE_ENV !== 'production' &&
       process.env.NODE_ENV !== 'test' &&
       config.productionTip !== false &&
       typeof console !== 'undefined'
     ) {
       console[console.info ? 'info' : 'log'](
-        `You are running Vue in development mode.\n` +
-        `Make sure to turn on production mode when deploying for production.\n` +
-        `See more tips at https://vuejs.org/guide/deployment.html`
+        'You are running Vue in development mode.\n' +
+          'Make sure to turn on production mode when deploying for production.\n' +
+          'See more tips at https://vuejs.org/guide/deployment.html'
       )
     }
   }, 0)

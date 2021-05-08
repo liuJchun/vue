@@ -66,8 +66,8 @@ function genAttrSegment (name: string, value: string): StringSegment {
     // force double quote
     value = value.replace(/^'|'$/g, '"')
     // force enumerated attr to "true"
-    if (isEnumeratedAttr(name) && value !== `"false"`) {
-      value = `"true"`
+    if (isEnumeratedAttr(name) && value !== '"false"') {
+      value = '"true"'
     }
     return {
       type: RAW,

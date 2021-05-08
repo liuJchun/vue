@@ -122,7 +122,7 @@ describe('Single File Component parser', () => {
           h1(v-if='1 < 2') hello
       </template>
     `)
-    expect(res.template.content.trim()).toBe(`div\n  h1(v-if='1 < 2') hello`)
+    expect(res.template.content.trim()).toBe('div\n  h1(v-if=\'1 < 2\') hello')
   })
 
   it('should handle component contains "<" only', () => {
@@ -131,7 +131,7 @@ describe('Single File Component parser', () => {
         <span><</span>
       </template>
     `)
-    expect(res.template.content.trim()).toBe(`<span><</span>`)
+    expect(res.template.content.trim()).toBe('<span><</span>')
   })
 
   it('should handle custom blocks without parsing them', () => {
@@ -199,12 +199,12 @@ describe('Single File Component parser', () => {
   })
 
   it('should not hang on trailing text', () => {
-    const res = parseComponent(`<template>hi</`)
+    const res = parseComponent('<template>hi</')
     expect(res.template.content).toBe('hi')
   })
 
   it('should collect errors with source range', () => {
-    const res = parseComponent(`<template>hi</`, { outputSourceRange: true })
+    const res = parseComponent('<template>hi</', { outputSourceRange: true })
     expect(res.errors.length).toBe(1)
     expect(res.errors[0].start).toBe(0)
   })

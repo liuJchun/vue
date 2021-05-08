@@ -159,8 +159,8 @@ function renderComponent (node, isRoot, context) {
     }
     if (isDef(getKey) && isUndef(name)) {
       warnOnce(
-        `[vue-server-renderer] Components that implement "serverCacheKey" ` +
-        `must also define a unique "name" option.`
+        '[vue-server-renderer] Components that implement "serverCacheKey" ' +
+        'must also define a unique "name" option.'
       )
     }
     renderComponentInner(node, isRoot, context)
@@ -245,7 +245,7 @@ function renderAsyncComponent (node, isRoot, context) {
     } else {
       // invalid component, but this does not throw on the client
       // so render empty comment node
-      context.write(`<!---->`, context.next)
+      context.write('<!---->', context.next)
     }
   }
 

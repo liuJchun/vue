@@ -368,13 +368,13 @@ describe('Directive v-bind:style', () => {
   // #5318
   it('should work for elements passed down as a slot', done => {
     const vm = new Vue({
-      template: `<test><div :style="style"/></test>`,
+      template: '<test><div :style="style"/></test>',
       data: {
         style: { color: 'red' }
       },
       components: {
         test: {
-          template: `<div><slot/></div>`
+          template: '<div><slot/></div>'
         }
       }
     }).$mount()
