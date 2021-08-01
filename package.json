@@ -14,7 +14,7 @@
   ],
   "sideEffects": false,
   "scripts": {
-    "dev": "rollup -w -c scripts/config.js --environment TARGET:web-full-dev",
+    "dev": "rollup -w -c scripts/config.js --environment TARGET:web-full-dev --sourcemap",
     "dev:cjs": "rollup -w -c scripts/config.js --environment TARGET:web-runtime-cjs-dev",
     "dev:esm": "rollup -w -c scripts/config.js --environment TARGET:web-runtime-esm",
     "dev:test": "karma start test/unit/karma.dev.config.js",
@@ -34,7 +34,7 @@
     "test:ssr": "npm run build:ssr && jasmine JASMINE_CONFIG_PATH=test/ssr/jasmine.js",
     "test:sauce": "npm run sauce -- 0 && npm run sauce -- 1 && npm run sauce -- 2",
     "test:types": "tsc -p ./types/test/tsconfig.json",
-    "lint": "eslint src scripts test --fix",
+    "lint": "eslint src scripts test",
     "flow": "flow check",
     "sauce": "karma start test/unit/karma.sauce.config.js",
     "bench:ssr": "npm run build:ssr && node benchmarks/ssr/renderToString.js && node benchmarks/ssr/renderToStream.js",
