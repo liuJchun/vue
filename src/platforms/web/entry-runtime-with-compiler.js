@@ -13,7 +13,9 @@ import {
   shouldDecodeNewlinesForHref,
 } from './util/compat'
 
+// 闭包 缓存 cache对象
 const idToTemplate = cached((id) => {
+  // 查找 Element 找不到 返回 div dom
   const el = query(id)
   return el && el.innerHTML
 })
@@ -43,9 +45,11 @@ Vue.prototype.$mount = function (
   // 如果同时存在template, 优先执行 render 方法
   if (!options.render) {
     let template = options.template
+    // 获取template的内容，如果以#开头，查找的dom，找不到创建一个div dom
     if (template) {
       if (typeof template === 'string') {
         if (template.charAt(0) === '#') {
+          // 闭包，将 template dom 缓存
           template = idToTemplate(template)
           /* istanbul ignore if */
           if (process.env.NODE_ENV !== 'production' && !template) {
@@ -55,23 +59,26 @@ Vue.prototype.$mount = function (
             )
           }
         }
-      } else if (template.nodeType) {
+        
+      } else if (template.nodeType) {// template 是一个真实的dom
         template = template.innerHTML
       } else {
         if (process.env.NODE_ENV !== 'production') {
           warn('invalid template option:' + template, this)
         }
+        // this
         return this
       }
     } else if (el) {
       template = getOuterHTML(el)
     }
+    
     if (template) {
       /* istanbul ignore if */
       if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
         mark('compile')
       }
-
+      // staticRenderFns 是一个数组
       const { render, staticRenderFns } = compileToFunctions(
         template,
         {
@@ -83,6 +90,7 @@ Vue.prototype.$mount = function (
         },
         this
       )
+      // render 、 staticRenderFns 挂载 到 $options 中
       options.render = render
       options.staticRenderFns = staticRenderFns
 

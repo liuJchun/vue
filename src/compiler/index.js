@@ -12,10 +12,13 @@ export const createCompiler = createCompilerCreator(function baseCompile (
   template: string,
   options: CompilerOptions
 ): CompiledResult {
+  // 将template 转换成ast 对象
   const ast = parse(template.trim(), options)
   if (options.optimize !== false) {
+    // 优化静态节点
     optimize(ast, options)
   }
+  // 通过 ast 生成 code
   const code = generate(ast, options)
   return {
     ast,

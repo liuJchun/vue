@@ -78,6 +78,9 @@ export function genElement (el: ASTElement, state: CodegenState): string {
     } else {
       let data
       if (!el.plain || (el.pre && state.maybeComponent(el))) {
+        // 生成元素的属性/指令/事件等
+        // 处理各种指令,包括 genDirectives(model/text/html)
+        // 返回 createElement 的第二个参数
         data = genData(el, state)
       }
 
@@ -541,6 +544,7 @@ export function genText (text: ASTText | ASTExpression): string {
 }
 
 export function genComment (comment: ASTText): string {
+  // 使用JSON.stringfy 字符串加上引号 hello -> "hello"
   return `_e(${JSON.stringify(comment.text)})`
 }
 

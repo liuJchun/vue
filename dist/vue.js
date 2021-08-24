@@ -4,8 +4,8 @@
  * Released under the MIT License.
  */
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-  typeof define === 'function' && define.amd ? define(factory) :
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('process')) :
+  typeof define === 'function' && define.amd ? define(['process'], factory) :
   (global = global || self, global.Vue = factory());
 }(this, function () { 'use strict';
 
@@ -881,7 +881,9 @@
       while ( len-- ) args[ len ] = arguments[ len ];
 
       var result = original.apply(this, args);
+      // this: 挂载 数组的对象
       var ob = this.__ob__;
+      // 用于记录 新增的 元素
       var inserted;
       switch (method) {
         case 'push':
@@ -892,8 +894,10 @@
           inserted = args.slice(2);
           break
       }
+      // 对于插入的新元素 重新遍历数组元素设置为响应式数据
       if (inserted) { ob.observeArray(inserted); }
       // notify change
+      // 调用了修改数组的方法 调用数组的ob对象发送通知
       ob.dep.notify();
       return result
     });
@@ -925,6 +929,7 @@
     this.vmCount = 0;
     def(value, '__ob__', this);
     if (Array.isArray(value)) {
+      // 支持 __proto__ 属性
       if (hasProto) {
         protoAugment(value, arrayMethods);
       } else {
@@ -1020,7 +1025,9 @@
   ) {
     var dep = new Dep();
 
+    // 获取对象的属性描述符
     var property = Object.getOwnPropertyDescriptor(obj, key);
+    // 对象的  configurable = false 不能设置 getter / setter
     if (property && property.configurable === false) {
       return
     }
@@ -3517,9 +3524,11 @@
     // so that we get proper render context inside it.
     // args order: tag, data, children, normalizationType, alwaysNormalize
     // internal version is used by render functions compiled from templates
+    // 对编译生成 render 进行渲染的方法
     vm._c = function (a, b, c, d) { return createElement(vm, a, b, c, d, false); };
     // normalization is always applied for the public version, used in
     // user-written render functions.
+    // 对于手写的render 进行渲染的方法，true决定了如何处理 children
     vm.$createElement = function (a, b, c, d) { return createElement(vm, a, b, c, d, true); };
 
     // $attrs & $listeners are exposed for easier HOC creation.
@@ -3950,6 +3959,8 @@
   }
 
   function lifecycleMixin (Vue) {
+    // _update 方法是把VNode 渲染成 真是的 DOM
+    // 首次渲染会调用，数据更新后会调用
     Vue.prototype._update = function (vnode, hydrating) {
       var vm = this;
       var prevEl = vm.$el;
@@ -4458,6 +4469,7 @@
     }
     this.cb = cb;
     this.id = ++uid$2; // uid for batching
+    // 标记当前的 Watcher 是否是活动的 watcher 默认是 true
     this.active = true;
     this.dirty = this.lazy; // for lazy watchers
     this.deps = [];
@@ -4469,6 +4481,8 @@
     if (typeof expOrFn === 'function') {
       this.getter = expOrFn;
     } else {
+      // expOrFn 是字符串的时候，例如 watch:{'person.name': function...}
+      // parsePath('path') 返回一个函数获取 path 的值
       this.getter = parsePath(expOrFn);
       if (!this.getter) {
         this.getter = noop;
@@ -4973,7 +4987,7 @@
 
   var uid$3 = 0;
 
-  function initMixin (Vue) {
+  function initMixin(Vue) {
     Vue.prototype._init = function (options) {
       var vm = this;
       // a uid
@@ -4988,26 +5002,31 @@
       }
 
       // a flag to avoid this being observed
+      // 设置成true 不需要被 Obverved 监听
       vm._isVue = true;
       // merge options
+      // 子组件调用
       if (options && options._isComponent) {
         // optimize internal component instantiation
         // since dynamic options merging is pretty slow, and none of the
         // internal component options needs special treatment.
+        // 挂载 组件的 内部属性 比如：$options
         initInternalComponent(vm, options);
       } else {
         vm.$options = mergeOptions(
-          resolveConstructorOptions(vm.constructor),
+          resolveConstructorOptions(vm.constructor),// vm.constructor 当前 vm 的构造函数
           options || {},
           vm
         );
       }
       /* istanbul ignore else */
       {
+        // 代理 vm 对象
         initProxy(vm);
       }
       // expose real self
       vm._self = vm;
+      //  初始化 vm 上的属性 $ref $parent $children _watch _prop...
       initLifecycle(vm);
       initEvents(vm);
       initRender(vm);
@@ -5030,8 +5049,11 @@
     };
   }
 
-  function initInternalComponent (vm, options) {
-    var opts = vm.$options = Object.create(vm.constructor.options);
+  function initInternalComponent(
+    vm,
+    options
+  ) {
+    var opts = (vm.$options = Object.create(vm.constructor.options));
     // doing this because it's faster than dynamic enumeration.
     var parentVnode = options._parentVnode;
     opts.parent = options.parent;
@@ -5049,7 +5071,7 @@
     }
   }
 
-  function resolveConstructorOptions (Ctor) {
+  function resolveConstructorOptions(Ctor) {
     var options = Ctor.options;
     if (Ctor.super) {
       var superOptions = resolveConstructorOptions(Ctor.super);
@@ -5073,7 +5095,7 @@
     return options
   }
 
-  function resolveModifiedOptions (Ctor) {
+  function resolveModifiedOptions(Ctor) {
     var modified;
     var latest = Ctor.options;
     var sealed = Ctor.sealedOptions;
@@ -5086,6 +5108,7 @@
     return modified
   }
 
+  // 此处不用class的原因是为了方便 Vue 示例的混入实例成员
   function Vue (options) {
     if (!(this instanceof Vue)
     ) {
@@ -5094,10 +5117,15 @@
     this._init(options);
   }
 
+  // 注册 vm 的 _init 方法
   initMixin(Vue);
+  // 注册 vm 的 $data / $props / $set / $delete / $watch
   stateMixin(Vue);
+  // 注册相关事件 $on / $off / $once / $emit
   eventsMixin(Vue);
+  // 注册生命周期相关的混入方法 _update / $forcedUpdate / $destory
   lifecycleMixin(Vue);
+  // 混入 render / $nextTick
   renderMixin(Vue);
 
   /*  */
@@ -5150,6 +5178,7 @@
       extendOptions = extendOptions || {};
       var Super = this;
       var SuperId = Super.cid;
+      // 重缓存中加载组件的构造函数
       var cachedCtors = extendOptions._Ctor || (extendOptions._Ctor = {});
       if (cachedCtors[SuperId]) {
         return cachedCtors[SuperId]
@@ -5235,6 +5264,7 @@
         id,
         definition
       ) {
+        // 不存在第二个参数，则组件返回之前注册的组件对象
         if (!definition) {
           return this.options[type + 's'][id]
         } else {
@@ -5244,6 +5274,7 @@
           }
           if (type === 'component' && isPlainObject(definition)) {
             definition.name = definition.name || id;
+            // this.options._base === Vue ，组件配置转化成组件的构造函数
             definition = this.options._base.extend(definition);
           }
           if (type === 'directive' && typeof definition === 'function') {
@@ -5464,13 +5495,15 @@
     // this is used to identify the "base" constructor to extend all plain-object
     // components with in Weex's multi-instance scenarios.
     Vue.options._base = Vue;
-
+    // keep-alive 组件
     extend(Vue.options.components, builtInComponents);
-    // 插件
+    // 注册插件 Vue.use
     initUse(Vue);
-    // 混入
+    // 混入 Vue.mixin()
     initMixin$1(Vue);
+    // Vue.extend() 基于传入的options 返回一个组件的构造函数
     initExtend(Vue);
+    // Vue.directive()/Vue.component()/Vue.filter()
     initAssetRegisters(Vue);
   }
 
@@ -11712,8 +11745,9 @@
   }
 
   function createCompileToFunctionFn (compile) {
+    // 闭包缓存
     var cache = Object.create(null);
-
+    // 在$mount中调用的函数
     return function compileToFunctions (
       template,
       options,
@@ -11814,7 +11848,9 @@
   /*  */
 
   function createCompilerCreator (baseCompile) {
+    // baseOptions : 一些编译规则（、web/compiler/options）
     return function createCompiler (baseOptions) {
+      // compile
       function compile (
         template,
         options
@@ -11892,10 +11928,13 @@
     template,
     options
   ) {
+    // 将template 转换成ast 对象
     var ast = parse(template.trim(), options);
     if (options.optimize !== false) {
+      // 优化静态节点
       optimize(ast, options);
     }
+    // 通过 ast 生成 code
     var code = generate(ast, options);
     return {
       ast: ast,
@@ -11927,7 +11966,9 @@
 
   /*  */
 
+  // 闭包 缓存 cache对象
   var idToTemplate = cached(function (id) {
+    // 查找 Element 找不到 返回 div dom
     var el = query(id);
     return el && el.innerHTML
   });
@@ -11956,9 +11997,11 @@
     // 如果同时存在template, 优先执行 render 方法
     if (!options.render) {
       var template = options.template;
+      // 获取template的内容，如果以#开头，查找的dom，找不到创建一个div dom
       if (template) {
         if (typeof template === 'string') {
           if (template.charAt(0) === '#') {
+            // 闭包，将 template dom 缓存
             template = idToTemplate(template);
             /* istanbul ignore if */
             if (!template) {
@@ -11968,23 +12011,26 @@
               );
             }
           }
-        } else if (template.nodeType) {
+          
+        } else if (template.nodeType) {// template 是一个真实的dom
           template = template.innerHTML;
         } else {
           {
             warn('invalid template option:' + template, this);
           }
+          // this
           return this
         }
       } else if (el) {
         template = getOuterHTML(el);
       }
+      
       if (template) {
         /* istanbul ignore if */
         if (config.performance && mark) {
           mark('compile');
         }
-
+        // staticRenderFns 是一个数组
         var ref = compileToFunctions(
           template,
           {
@@ -11998,6 +12044,7 @@
         );
         var render = ref.render;
         var staticRenderFns = ref.staticRenderFns;
+        // render 、 staticRenderFns 挂载 到 $options 中
         options.render = render;
         options.staticRenderFns = staticRenderFns;
 

@@ -19,14 +19,17 @@ function createFunction (code, errors) {
 }
 
 export function createCompileToFunctionFn (compile: Function): Function {
+  // 闭包缓存
   const cache = Object.create(null)
-
+  // 在$mount中调用的函数
   return function compileToFunctions (
     template: string,
     options?: CompilerOptions,
     vm?: Component
   ): CompiledFunctionResult {
+    // 防止污染 Vue 中的options
     options = extend({}, options)
+    // 在开发环境中的控制台发送警告
     const warn = options.warn || baseWarn
     delete options.warn
 
@@ -49,6 +52,8 @@ export function createCompileToFunctionFn (compile: Function): Function {
     }
 
     // check cache
+    // 返回缓存中的compileFunctionsResult 对象
+    // delimiters 属性只有完整版的Vue才有，只有编译的时候才会有，作用是改变插值表达式的符号，默认是 {{}}
     const key = options.delimiters
       ? String(options.delimiters) + template
       : template
@@ -57,6 +62,7 @@ export function createCompileToFunctionFn (compile: Function): Function {
     }
 
     // compile
+    // 把模板编译成 { render, staticRenderFns },字符串形式的js代码
     const compiled = compile(template, options)
 
     // check compilation errors/tips
@@ -90,6 +96,7 @@ export function createCompileToFunctionFn (compile: Function): Function {
     // turn code into functions
     const res = {}
     const fnGenErrors = []
+    // 把字符串js代码转换成函数
     res.render = createFunction(compiled.render, fnGenErrors)
     res.staticRenderFns = compiled.staticRenderFns.map(code => {
       return createFunction(code, fnGenErrors)

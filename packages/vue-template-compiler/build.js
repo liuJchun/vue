@@ -260,7 +260,7 @@ function def (obj, key, val, enumerable) {
 
 // Regular Expressions for parsing tags and attributes
 var attribute = /^\s*([^\s"'<>\/=]+)(?:\s*(=)\s*(?:"([^"]*)"+|'([^']*)'+|([^\s"'=<>`]+)))?/;
-var dynamicArgAttribute = /^\s*((?:v-[\w-]+:|@|:|#)\[[^=]+\][^\s"'<>\/=]*)(?:\s*(=)\s*(?:"([^"]*)"+|'([^']*)'+|([^\s"'=<>`]+)))?/;
+var dynamicArgAttribute = /^\s*((?:v-[\w-]+:|@|:|#)\[[^=]+?\][^\s"'<>\/=]*)(?:\s*(=)\s*(?:"([^"]*)"+|'([^']*)'+|([^\s"'=<>`]+)))?/;
 var ncname = "[a-zA-Z_][\\-\\.0-9_a-zA-Z" + (unicodeRegExp.source) + "]*";
 var qnameCapture = "((?:" + ncname + "\\:)?" + ncname + ")";
 var startTagOpen = new RegExp(("^<" + qnameCapture));
@@ -282,7 +282,7 @@ var decodingMap = {
   '&amp;': '&',
   '&#10;': '\n',
   '&#9;': '\t',
-  '&#39;': "'"
+  '&#39;': '\''
 };
 var encodedAttr = /&(?:lt|gt|quot|amp|#39);/g;
 var encodedAttrWithNewLines = /&(?:lt|gt|quot|amp|#39|#10|#9);/g;
@@ -938,7 +938,7 @@ if (process.env.NODE_ENV !== 'production') {
     }
 
     return (
-      (name ? ("<" + (classify(name)) + ">") : "<Anonymous>") +
+      (name ? ("<" + (classify(name)) + ">") : '<Anonymous>') +
       (file && includeFile !== false ? (" at " + file) : '')
     )
   };
@@ -1105,7 +1105,9 @@ methodsToPatch.forEach(function (method) {
     while ( len-- ) args[ len ] = arguments[ len ];
 
     var result = original.apply(this, args);
+    // this: 挂载 数组的对象
     var ob = this.__ob__;
+    // 用于记录 新增的 元素
     var inserted;
     switch (method) {
       case 'push':
@@ -1116,8 +1118,10 @@ methodsToPatch.forEach(function (method) {
         inserted = args.slice(2);
         break
     }
+    // 对于插入的新元素 重新遍历数组元素设置为响应式数据
     if (inserted) { ob.observeArray(inserted); }
     // notify change
+    // 调用了修改数组的方法 调用数组的ob对象发送通知
     ob.dep.notify();
     return result
   });
@@ -1145,6 +1149,7 @@ var Observer = function Observer (value) {
   this.vmCount = 0;
   def(value, '__ob__', this);
   if (Array.isArray(value)) {
+    // 支持 __proto__ 属性
     if (hasProto) {
       protoAugment(value, arrayMethods);
     } else {
@@ -1240,7 +1245,9 @@ function defineReactive$$1 (
 ) {
   var dep = new Dep();
 
+  // 获取对象的属性描述符
   var property = Object.getOwnPropertyDescriptor(obj, key);
+  // 对象的  configurable = false 不能设置 getter / setter
   if (property && property.configurable === false) {
     return
   }
@@ -1668,7 +1675,7 @@ var isBooleanAttr = makeMap(
   'default,defaultchecked,defaultmuted,defaultselected,defer,disabled,' +
   'enabled,formnovalidate,hidden,indeterminate,inert,ismap,itemscope,loop,multiple,' +
   'muted,nohref,noresize,noshade,novalidate,nowrap,open,pauseonexit,readonly,' +
-  'required,reversed,scoped,seamless,selected,sortable,translate,' +
+  'required,reversed,scoped,seamless,selected,sortable,' +
   'truespeed,typemustmatch,visible'
 );
 
@@ -1694,7 +1701,7 @@ var isHTMLTag = makeMap(
 // contain child elements.
 var isSVG = makeMap(
   'svg,animate,circle,clippath,cursor,defs,desc,ellipse,filter,font-face,' +
-  'foreignObject,g,glyph,image,line,marker,mask,missing-glyph,path,pattern,' +
+  'foreignobject,g,glyph,image,line,marker,mask,missing-glyph,path,pattern,' +
   'polygon,polyline,rect,switch,symbol,text,textpath,tspan,use,view',
   true
 );
@@ -2362,13 +2369,13 @@ var modifierRE = /\.[^.\]]+(?=[^\]]*$)/g;
 var slotRE = /^v-slot(:|$)|^#/;
 
 var lineBreakRE = /[\r\n]/;
-var whitespaceRE = /\s+/g;
+var whitespaceRE = /[ \f\t\r\n]+/g;
 
 var invalidAttributeRE = /[\s"'<>\/=]/;
 
 var decodeHTMLCached = cached(he.decode);
 
-var emptySlotScopeToken = "_empty_";
+var emptySlotScopeToken = '_empty_';
 
 // configurable state
 var warn$1;
@@ -2410,8 +2417,12 @@ function parse (
   platformMustUseProp = options.mustUseProp || no;
   platformGetTagNamespace = options.getTagNamespace || no;
   var isReservedTag = options.isReservedTag || no;
-  maybeComponent = function (el) { return !!el.component || !isReservedTag(el.tag); };
-
+  maybeComponent = function (el) { return !!(
+    el.component ||
+    el.attrsMap[':is'] ||
+    el.attrsMap['v-bind:is'] ||
+    !(el.attrsMap.is ? isReservedTag(el.attrsMap.is) : isReservedTag(el.tag))
+  ); };
   transforms = pluckModuleFunction(options.modules, 'transformNode');
   preTransforms = pluckModuleFunction(options.modules, 'preTransformNode');
   postTransforms = pluckModuleFunction(options.modules, 'postTransformNode');
@@ -2452,9 +2463,9 @@ function parse (
         });
       } else if (process.env.NODE_ENV !== 'production') {
         warnOnce(
-          "Component template should contain exactly one root element. " +
-          "If you are using v-if on multiple elements, " +
-          "use v-else-if to chain them instead.",
+          'Component template should contain exactly one root element. ' +
+          'If you are using v-if on multiple elements, ' +
+          'use v-else-if to chain them instead.',
           { start: element.start }
         );
       }
@@ -2562,10 +2573,10 @@ function parse (
         attrs.forEach(function (attr) {
           if (invalidAttributeRE.test(attr.name)) {
             warn$1(
-              "Invalid dynamic argument expression: attribute names cannot contain " +
-              "spaces, quotes, <, >, / or =.",
+              'Invalid dynamic argument expression: attribute names cannot contain ' +
+              'spaces, quotes, <, >, / or =.',
               {
-                start: attr.start + attr.name.indexOf("["),
+                start: attr.start + attr.name.indexOf('['),
                 end: attr.start + attr.name.length
               }
             );
@@ -2781,7 +2792,7 @@ function processKey (el) {
     if (process.env.NODE_ENV !== 'production') {
       if (el.tag === 'template') {
         warn$1(
-          "<template> cannot be keyed. Place the key on real elements instead.",
+          '<template> cannot be keyed. Place the key on real elements instead.',
           getRawBindingAttr(el, 'key')
         );
       }
@@ -2790,8 +2801,8 @@ function processKey (el) {
         var parent = el.parent;
         if (iterator && iterator === exp && parent && parent.tag === 'transition-group') {
           warn$1(
-            "Do not use v-for index as key on <transition-group> children, " +
-            "this is the same as not using keys.",
+            'Do not use v-for index as key on <transition-group> children, ' +
+            'this is the same as not using keys.',
             getRawBindingAttr(el, 'key'),
             true /* tip */
           );
@@ -2890,7 +2901,7 @@ function findPrevElement (children) {
       if (process.env.NODE_ENV !== 'production' && children[i].text !== ' ') {
         warn$1(
           "text \"" + (children[i].text.trim()) + "\" between v-if and v-else(-if) " +
-          "will be ignored.",
+          'will be ignored.',
           children[i]
         );
       }
@@ -2922,10 +2933,10 @@ function processSlotContent (el) {
     /* istanbul ignore if */
     if (process.env.NODE_ENV !== 'production' && slotScope) {
       warn$1(
-        "the \"scope\" attribute for scoped slots have been deprecated and " +
-        "replaced by \"slot-scope\" since 2.5. The new \"slot-scope\" attribute " +
-        "can also be used on plain elements in addition to <template> to " +
-        "denote scoped slots.",
+        'the "scope" attribute for scoped slots have been deprecated and ' +
+        'replaced by "slot-scope" since 2.5. The new "slot-scope" attribute ' +
+        'can also be used on plain elements in addition to <template> to ' +
+        'denote scoped slots.',
         el.rawAttrsMap['scope'],
         true
       );
@@ -2936,8 +2947,8 @@ function processSlotContent (el) {
     if (process.env.NODE_ENV !== 'production' && el.attrsMap['v-for']) {
       warn$1(
         "Ambiguous combined usage of slot-scope and v-for on <" + (el.tag) + "> " +
-        "(v-for takes higher priority). Use a wrapper <template> for the " +
-        "scoped slot to make it clearer.",
+        '(v-for takes higher priority). Use a wrapper <template> for the ' +
+        'scoped slot to make it clearer.',
         el.rawAttrsMap['slot-scope'],
         true
       );
@@ -2966,14 +2977,14 @@ function processSlotContent (el) {
         if (process.env.NODE_ENV !== 'production') {
           if (el.slotTarget || el.slotScope) {
             warn$1(
-              "Unexpected mixed usage of different slot syntaxes.",
+              'Unexpected mixed usage of different slot syntaxes.',
               el
             );
           }
           if (el.parent && !maybeComponent(el.parent)) {
             warn$1(
-              "<template v-slot> can only appear at the root level inside " +
-              "the receiving component",
+              '<template v-slot> can only appear at the root level inside ' +
+              'the receiving component',
               el
             );
           }
@@ -2992,20 +3003,20 @@ function processSlotContent (el) {
         if (process.env.NODE_ENV !== 'production') {
           if (!maybeComponent(el)) {
             warn$1(
-              "v-slot can only be used on components or <template>.",
+              'v-slot can only be used on components or <template>.',
               slotBinding$1
             );
           }
           if (el.slotScope || el.slotTarget) {
             warn$1(
-              "Unexpected mixed usage of different slot syntaxes.",
+              'Unexpected mixed usage of different slot syntaxes.',
               el
             );
           }
           if (el.scopedSlots) {
             warn$1(
-              "To avoid scope ambiguity, the default slot should also use " +
-              "<template> syntax when there are other named slots.",
+              'To avoid scope ambiguity, the default slot should also use ' +
+              '<template> syntax when there are other named slots.',
               slotBinding$1
             );
           }
@@ -3041,7 +3052,7 @@ function getSlotName (binding) {
       name = 'default';
     } else if (process.env.NODE_ENV !== 'production') {
       warn$1(
-        "v-slot shorthand syntax requires a slot name.",
+        'v-slot shorthand syntax requires a slot name.',
         binding
       );
     }
@@ -3059,9 +3070,9 @@ function processSlotOutlet (el) {
     el.slotName = getBindingAttr(el, 'name');
     if (process.env.NODE_ENV !== 'production' && el.key) {
       warn$1(
-        "`key` does not work on <slot> because slots are abstract outlets " +
-        "and can possibly expand into multiple elements. " +
-        "Use the key on a wrapping element instead.",
+        '`key` does not work on <slot> because slots are abstract outlets ' +
+        'and can possibly expand into multiple elements. ' +
+        'Use the key on a wrapping element instead.',
         getRawBindingAttr(el, 'key')
       );
     }
@@ -3117,7 +3128,7 @@ function processAttrs (el) {
             name = camelize(name);
           }
           if (modifiers.sync) {
-            syncGen = genAssignmentCode(value, "$event");
+            syncGen = genAssignmentCode(value, '$event');
             if (!isDynamic) {
               addHandler(
                 el,
@@ -3283,10 +3294,10 @@ function checkForAliasModel (el, value) {
     if (_el.for && _el.alias === value) {
       warn$1(
         "<" + (el.tag) + " v-model=\"" + value + "\">: " +
-        "You are binding v-model directly to a v-for iteration alias. " +
-        "This will not be able to modify the v-for source array because " +
-        "writing to the alias is like modifying a function local variable. " +
-        "Consider using an array of objects and use v-model on an object property instead.",
+        'You are binding v-model directly to a v-for iteration alias. ' +
+        'This will not be able to modify the v-for source array because ' +
+        'writing to the alias is like modifying a function local variable. ' +
+        'Consider using an array of objects and use v-model on an object property instead.',
         el.rawAttrsMap['v-model']
       );
     }
@@ -3313,7 +3324,7 @@ function preTransformNode (el, options) {
 
     if (typeBinding) {
       var ifCondition = getAndRemoveAttr(el, 'v-if', true);
-      var ifConditionExtra = ifCondition ? ("&&(" + ifCondition + ")") : "";
+      var ifConditionExtra = ifCondition ? ("&&(" + ifCondition + ")") : '';
       var hasElse = getAndRemoveAttr(el, 'v-else', true) != null;
       var elseIfCondition = getAndRemoveAttr(el, 'v-else-if', true);
       // 1. checkbox
@@ -3397,7 +3408,7 @@ function model$1 (
     if (tag === 'input' && type === 'file') {
       warn$2(
         "<" + (el.tag) + " v-model=\"" + value + "\" type=\"file\">:\n" +
-        "File inputs are read only. Use a v-on:change listener instead.",
+        'File inputs are read only. Use a v-on:change listener instead.',
         el.rawAttrsMap['v-model']
       );
     }
@@ -3422,7 +3433,7 @@ function model$1 (
   } else if (process.env.NODE_ENV !== 'production') {
     warn$2(
       "<" + (el.tag) + " v-model=\"" + value + "\">: " +
-      "v-model is not supported on this element type. " +
+      'v-model is not supported on this element type. ' +
       'If you are working with contenteditable, it\'s recommended to ' +
       'wrap a library dedicated for that purpose inside a custom component.',
       el.rawAttrsMap['v-model']
@@ -3482,9 +3493,9 @@ function genSelect (
   modifiers
 ) {
   var number = modifiers && modifiers.number;
-  var selectedVal = "Array.prototype.filter" +
-    ".call($event.target.options,function(o){return o.selected})" +
-    ".map(function(o){var val = \"_value\" in o ? o._value : o.value;" +
+  var selectedVal = 'Array.prototype.filter' +
+    '.call($event.target.options,function(o){return o.selected})' +
+    '.map(function(o){var val = "_value" in o ? o._value : o.value;' +
     "return " + (number ? '_n(val)' : 'val') + "})";
 
   var assignment = '$event.target.multiple ? $$selectedVal : $$selectedVal[0]';
@@ -3528,7 +3539,7 @@ function genDefaultModel (
 
   var valueExpression = '$event.target.value';
   if (trim) {
-    valueExpression = "$event.target.value.trim()";
+    valueExpression = '$event.target.value.trim()';
   }
   if (number) {
     valueExpression = "_n(" + valueExpression + ")";
@@ -3754,14 +3765,14 @@ var genGuard = function (condition) { return ("if(" + condition + ")return null;
 var modifierCode = {
   stop: '$event.stopPropagation();',
   prevent: '$event.preventDefault();',
-  self: genGuard("$event.target !== $event.currentTarget"),
-  ctrl: genGuard("!$event.ctrlKey"),
-  shift: genGuard("!$event.shiftKey"),
-  alt: genGuard("!$event.altKey"),
-  meta: genGuard("!$event.metaKey"),
-  left: genGuard("'button' in $event && $event.button !== 0"),
-  middle: genGuard("'button' in $event && $event.button !== 1"),
-  right: genGuard("'button' in $event && $event.button !== 2")
+  self: genGuard('$event.target !== $event.currentTarget'),
+  ctrl: genGuard('!$event.ctrlKey'),
+  shift: genGuard('!$event.shiftKey'),
+  alt: genGuard('!$event.altKey'),
+  meta: genGuard('!$event.metaKey'),
+  left: genGuard('\'button\' in $event && $event.button !== 0'),
+  middle: genGuard('\'button\' in $event && $event.button !== 1'),
+  right: genGuard('\'button\' in $event && $event.button !== 2')
 };
 
 function genHandlers (
@@ -3769,8 +3780,8 @@ function genHandlers (
   isNative
 ) {
   var prefix = isNative ? 'nativeOn:' : 'on:';
-  var staticHandlers = "";
-  var dynamicHandlers = "";
+  var staticHandlers = '';
+  var dynamicHandlers = '';
   for (var name in events) {
     var handlerCode = genHandler(events[name]);
     if (events[name] && events[name].dynamic) {
@@ -3836,9 +3847,9 @@ function genHandler (handler) {
       code += genModifierCode;
     }
     var handlerCode = isMethodPath
-      ? ("return " + (handler.value) + "($event)")
+      ? ("return " + (handler.value) + ".apply(null, arguments)")
       : isFunctionExpression
-        ? ("return (" + (handler.value) + ")($event)")
+        ? ("return (" + (handler.value) + ").apply(null, arguments)")
         : isFunctionInvocation
           ? ("return " + (handler.value))
           : handler.value;
@@ -3851,7 +3862,7 @@ function genKeyFilter (keys) {
     // make sure the key filters only apply to KeyboardEvents
     // #9441: can't use 'keyCode' in $event because Chrome autofill fires fake
     // key events that do not have keyCode property...
-    "if(!$event.type.indexOf('key')&&" +
+    'if(!$event.type.indexOf(\'key\')&&' +
     (keys.map(genFilterCode).join('&&')) + ")return null;"
   )
 }
@@ -3864,12 +3875,12 @@ function genFilterCode (key) {
   var keyCode = keyCodes[key];
   var keyName = keyNames[key];
   return (
-    "_k($event.keyCode," +
+    '_k($event.keyCode,' +
     (JSON.stringify(key)) + "," +
     (JSON.stringify(keyCode)) + "," +
-    "$event.key," +
+    '$event.key,' +
     "" + (JSON.stringify(keyName)) +
-    ")"
+    ')'
   )
 }
 
@@ -3877,7 +3888,7 @@ function genFilterCode (key) {
 
 function on (el, dir) {
   if (process.env.NODE_ENV !== 'production' && dir.modifiers) {
-    warn("v-on without argument does not support modifiers.");
+    warn('v-on without argument does not support modifiers.');
   }
   el.wrapListeners = function (code) { return ("_g(" + code + "," + (dir.value) + ")"); };
 }
@@ -3924,7 +3935,8 @@ function generate (
   options
 ) {
   var state = new CodegenState(options);
-  var code = ast ? genElement(ast, state) : '_c("div")';
+  // fix #11483, Root level <script> tags should not be rendered.
+  var code = ast ? (ast.tag === 'script' ? 'null' : genElement(ast, state)) : '_c("div")';
   return {
     render: ("with(this){return " + code + "}"),
     staticRenderFns: state.staticRenderFns
@@ -4002,7 +4014,7 @@ function genOnce (el, state) {
     }
     if (!key) {
       process.env.NODE_ENV !== 'production' && state.warn(
-        "v-once can only be used inside v-for that is keyed. ",
+        'v-once can only be used inside v-for that is keyed. ',
         el.rawAttrsMap['v-once']
       );
       return genElement(el, state)
@@ -4069,8 +4081,8 @@ function genFor (
   ) {
     state.warn(
       "<" + (el.tag) + " v-for=\"" + alias + " in " + exp + "\">: component lists rendered with " +
-      "v-for should have explicit keys. " +
-      "See https://vuejs.org/guide/list.html#key for more info.",
+      'v-for should have explicit keys. ' +
+      'See https://vuejs.org/guide/list.html#key for more info.',
       el.rawAttrsMap['v-for'],
       true /* tip */
     );
@@ -4100,11 +4112,11 @@ function genData$2 (el, state) {
     data += "ref:" + (el.ref) + ",";
   }
   if (el.refInFor) {
-    data += "refInFor:true,";
+    data += 'refInFor:true,';
   }
   // pre
   if (el.pre) {
-    data += "pre:true,";
+    data += 'pre:true,';
   }
   // record original tag name for components using "is" attribute
   if (el.component) {
@@ -4259,7 +4271,7 @@ function genScopedSlots (
     .map(function (key) { return genScopedSlot(slots[key], state); })
     .join(',');
 
-  return ("scopedSlots:_u([" + generatedSlots + "]" + (needsForceUpdate ? ",null,true" : "") + (!needsForceUpdate && needsKey ? (",null,false," + (hash(generatedSlots))) : "") + ")")
+  return ("scopedSlots:_u([" + generatedSlots + "]" + (needsForceUpdate ? ',null,true' : '') + (!needsForceUpdate && needsKey ? (",null,false," + (hash(generatedSlots))) : '') + ")")
 }
 
 function hash(str) {
@@ -4287,13 +4299,13 @@ function genScopedSlot (
 ) {
   var isLegacySyntax = el.attrsMap['slot-scope'];
   if (el.if && !el.ifProcessed && !isLegacySyntax) {
-    return genIf(el, state, genScopedSlot, "null")
+    return genIf(el, state, genScopedSlot, 'null')
   }
   if (el.for && !el.forProcessed) {
     return genFor(el, state, genScopedSlot)
   }
   var slotScope = el.slotScope === emptySlotScopeToken
-    ? ""
+    ? ''
     : String(el.slotScope);
   var fn = "function(" + slotScope + "){" +
     "return " + (el.tag === 'template'
@@ -4302,8 +4314,8 @@ function genScopedSlot (
         : genChildren(el, state) || 'undefined'
       : genElement(el, state)) + "}";
   // reverse proxy v-slot without scope on this.$slots
-  var reverseProxy = slotScope ? "" : ",proxy:true";
-  return ("{key:" + (el.slotTarget || "\"default\"") + ",fn:" + fn + reverseProxy + "}")
+  var reverseProxy = slotScope ? '' : ',proxy:true';
+  return ("{key:" + (el.slotTarget || '"default"') + ",fn:" + fn + reverseProxy + "}")
 }
 
 function genChildren (
@@ -4323,8 +4335,8 @@ function genChildren (
       el$1.tag !== 'slot'
     ) {
       var normalizationType = checkSkip
-        ? state.maybeComponent(el$1) ? ",1" : ",0"
-        : "";
+        ? state.maybeComponent(el$1) ? ',1' : ',0'
+        : '';
       return ("" + ((altGenElement || genElement)(el$1, state)) + normalizationType)
     }
     var normalizationType$1 = checkSkip
@@ -4389,7 +4401,7 @@ function genComment (comment) {
 function genSlot (el, state) {
   var slotName = el.slotName || '"default"';
   var children = genChildren(el, state);
-  var res = "_t(" + slotName + (children ? ("," + children) : '');
+  var res = "_t(" + slotName + (children ? (",function(){return " + children + "}") : '');
   var attrs = el.attrs || el.dynamicAttrs
     ? genProps((el.attrs || []).concat(el.dynamicAttrs || []).map(function (attr) { return ({
         // slot props are camelized
@@ -4400,7 +4412,7 @@ function genSlot (el, state) {
     : null;
   var bind$$1 = el.attrsMap['v-bind'];
   if ((attrs || bind$$1) && !children) {
-    res += ",null";
+    res += ',null';
   }
   if (attrs) {
     res += "," + attrs;
@@ -4422,8 +4434,8 @@ function genComponent (
 }
 
 function genProps (props) {
-  var staticProps = "";
-  var dynamicProps = "";
+  var staticProps = '';
+  var dynamicProps = '';
   for (var i = 0; i < props.length; i++) {
     var prop = props[i];
     var value = transformSpecialNewlines(prop.value);
@@ -4509,7 +4521,7 @@ function checkEvent (exp, text, warn, range) {
   var keywordMatch = stripped.match(unaryOperatorsRE);
   if (keywordMatch && stripped.charAt(keywordMatch.index - 1) !== '$') {
     warn(
-      "avoid using JavaScript unary operator as property name: " +
+      'avoid using JavaScript unary operator as property name: ' +
       "\"" + (keywordMatch[0]) + "\" in expression " + (text.trim()),
       range
     );
@@ -4547,7 +4559,7 @@ function checkExpression (exp, text, warn, range) {
     var keywordMatch = exp.replace(stripStringRE, '').match(prohibitedKeywordRE);
     if (keywordMatch) {
       warn(
-        "avoid using JavaScript keyword as property name: " +
+        'avoid using JavaScript keyword as property name: ' +
         "\"" + (keywordMatch[0]) + "\"\n  Raw expression: " + (text.trim()),
         range
       );
@@ -4595,17 +4607,17 @@ function generateCodeFrame (
     if (count >= start) {
       for (var j = i - range; j <= i + range || end > count; j++) {
         if (j < 0 || j >= lines.length) { continue }
-        res.push(("" + (j + 1) + (repeat$1(" ", 3 - String(j + 1).length)) + "|  " + (lines[j])));
+        res.push(("" + (j + 1) + (repeat$1(' ', 3 - String(j + 1).length)) + "|  " + (lines[j])));
         var lineLength = lines[j].length;
         if (j === i) {
           // push underline
           var pad = start - (count - lineLength) + 1;
           var length = end > count ? lineLength - pad : end - start;
-          res.push("   |  " + repeat$1(" ", pad) + repeat$1("^", length));
+          res.push('   |  ' + repeat$1(' ', pad) + repeat$1('^', length));
         } else if (j > i) {
           if (end > count) {
             var length$1 = Math.min(end - count, lineLength);
-            res.push("   |  " + repeat$1("^", length$1));
+            res.push('   |  ' + repeat$1('^', length$1));
           }
           count += lineLength + 1;
         }
@@ -4726,7 +4738,7 @@ function createCompileToFunctionFn (compile) {
     if (process.env.NODE_ENV !== 'production') {
       if ((!compiled.errors || !compiled.errors.length) && fnGenErrors.length) {
         warn$$1(
-          "Failed to generate render function:\n\n" +
+          'Failed to generate render function:\n\n' +
           fnGenErrors.map(function (ref) {
             var err = ref.err;
             var code = ref.code;
@@ -4950,8 +4962,8 @@ function genAttrSegment (name, value) {
     // force double quote
     value = value.replace(/^'|'$/g, '"');
     // force enumerated attr to "true"
-    if (isEnumeratedAttr(name) && value !== "\"false\"") {
-      value = "\"true\"";
+    if (isEnumeratedAttr(name) && value !== '"false"') {
+      value = '"true"';
     }
     return {
       type: RAW,
@@ -5291,7 +5303,7 @@ function elementToOpenTagSegments (el, state) {
   if (state.options.scopeId) {
     segments.push({ type: RAW, value: (" " + (state.options.scopeId)) });
   }
-  segments.push({ type: RAW, value: ">" });
+  segments.push({ type: RAW, value: '>' });
   return segments
 }
 

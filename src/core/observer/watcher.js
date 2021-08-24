@@ -67,6 +67,7 @@ export default class Watcher {
     }
     this.cb = cb
     this.id = ++uid // uid for batching
+    // 标记当前的 Watcher 是否是活动的 watcher 默认是 true
     this.active = true
     this.dirty = this.lazy // for lazy watchers
     this.deps = []
@@ -80,6 +81,8 @@ export default class Watcher {
     if (typeof expOrFn === 'function') {
       this.getter = expOrFn
     } else {
+      // expOrFn 是字符串的时候，例如 watch:{'person.name': function...}
+      // parsePath('path') 返回一个函数获取 path 的值
       this.getter = parsePath(expOrFn)
       if (!this.getter) {
         this.getter = noop

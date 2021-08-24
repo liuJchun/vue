@@ -35,8 +35,11 @@ export function toggleObserving (value: boolean) {
  * collect dependencies and dispatch updates.
  */
 export class Observer {
+  // 监听的值
   value: any;
+  // 依赖对象
   dep: Dep;
+  // 实例计数器
   vmCount: number; // number of vms that have this object as root $data
 
   constructor (value: any) {
@@ -45,6 +48,7 @@ export class Observer {
     this.vmCount = 0
     def(value, '__ob__', this)
     if (Array.isArray(value)) {
+      // 支持 __proto__ 属性
       if (hasProto) {
         protoAugment(value, arrayMethods)
       } else {
@@ -141,7 +145,9 @@ export function defineReactive (
 ) {
   const dep = new Dep()
 
+  // 获取对象的属性描述符
   const property = Object.getOwnPropertyDescriptor(obj, key)
+  // 对象的  configurable = false 不能设置 getter / setter
   if (property && property.configurable === false) {
     return
   }

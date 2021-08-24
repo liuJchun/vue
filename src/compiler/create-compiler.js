@@ -5,19 +5,25 @@ import { detectErrors } from './error-detector'
 import { createCompileToFunctionFn } from './to-function'
 
 export function createCompilerCreator (baseCompile: Function): Function {
+  // baseOptions : 一些编译规则（web/compiler/options.js 中定义）
+  // baseOptions是跟平台相关的 options
   return function createCompiler (baseOptions: CompilerOptions) {
+    // compile
     function compile (
       template: string,
       options?: CompilerOptions
     ): CompiledResult {
+      // 参数中的 options 是调用 compileToFunctions 中的选项，也是Vue中的options
+      // finalOptions 作用是 用来合并 baseOptions 和 options
       const finalOptions = Object.create(baseOptions)
+      // 用来存储编译过程中的 错误 和 信息
       const errors = []
       const tips = []
-
+      // 把消息放入到对应的数组中
       let warn = (msg, range, tip) => {
         (tip ? tips : errors).push(msg)
       }
-
+      // 如果options存在的话，合并options
       if (options) {
         if (process.env.NODE_ENV !== 'production' && options.outputSourceRange) {
           // $flow-disable-line

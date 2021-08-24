@@ -12,6 +12,7 @@ export function initAssetRegisters (Vue: GlobalAPI) {
       id: string,
       definition: Function | Object
     ): Function | Object | void {
+      // 不存在第二个参数，则组件返回之前注册的组件对象
       if (!definition) {
         return this.options[type + 's'][id]
       } else {
@@ -21,6 +22,7 @@ export function initAssetRegisters (Vue: GlobalAPI) {
         }
         if (type === 'component' && isPlainObject(definition)) {
           definition.name = definition.name || id
+          // this.options._base === Vue ，组件配置转化成组件的构造函数
           definition = this.options._base.extend(definition)
         }
         if (type === 'directive' && typeof definition === 'function') {

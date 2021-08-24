@@ -8,7 +8,7 @@ var ref = require('chalk');
 var red = ref.red;
 var yellow = ref.yellow;
 
-var prefix = "[vue-server-renderer-webpack-plugin]";
+var prefix = '[vue-server-renderer-webpack-plugin]';
 var warn = exports.warn = function (msg) { return console.error(red((prefix + " " + msg + "\n"))); };
 var tip = exports.tip = function (msg) { return console.log(yellow((prefix + " " + msg + "\n"))); };
 
@@ -66,8 +66,8 @@ VueSSRServerPlugin.prototype.apply = function apply (compiler) {
 
     if (entryAssets.length > 1) {
       throw new Error(
-        "Server-side bundle should have one single entry file. " +
-        "Avoid using CommonsChunkPlugin in the server config."
+        'Server-side bundle should have one single entry file. ' +
+        'Avoid using CommonsChunkPlugin in the server config.'
       )
     }
 
