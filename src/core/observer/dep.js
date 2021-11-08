@@ -11,25 +11,30 @@ let uid = 0
  * directives subscribing to it.
  */
 export default class Dep {
+  // 静态属性，wather 对象
   static target: ?Watcher;
+  // dep实例id
   id: number;
+  // dep 实例对应的 watcher 数组/对象订阅数组
   subs: Array<Watcher>;
 
   constructor () {
     this.id = uid++
     this.subs = []
   }
-
+  // 添加新的订阅者 wather
   addSub (sub: Watcher) {
     this.subs.push(sub)
   }
-
+  // 移除订阅者 wather
   removeSub (sub: Watcher) {
     remove(this.subs, sub)
   }
 
+  // 将观察对象（发布） 和 wather 建立依赖
   depend () {
     if (Dep.target) {
+      // 如果target存在，把 dep 添加到 wather 的依赖中
       Dep.target.addDep(this)
     }
   }

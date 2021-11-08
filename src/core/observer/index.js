@@ -35,7 +35,7 @@ export function toggleObserving (value: boolean) {
  * collect dependencies and dispatch updates.
  */
 export class Observer {
-  // 监听的值
+  // 观测对象
   value: any;
   // 依赖对象
   dep: Dep;
@@ -165,8 +165,11 @@ export function defineReactive (
     configurable: true,
     get: function reactiveGetter () {
       const value = getter ? getter.call(obj) : val
+      // 如果存在当前依赖目标，即 wather 存在，则建立依赖
       if (Dep.target) {
         dep.depend()
+        // 如果子观察目标存在，建立子对象依赖
+        // 为什么子对象需要建立依赖？当子对象发生添加、删除时，需要去发送通知
         if (childOb) {
           childOb.dep.depend()
           if (Array.isArray(value)) {

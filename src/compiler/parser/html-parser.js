@@ -61,6 +61,7 @@ export function parseHTML (html, options) {
   while (html) {
     last = html
     // Make sure we're not in a plaintext content element like script/style
+    // lastTag 缓存父级非自闭和的 tagName（即 stack 中存储的最后一个元素）
     if (!lastTag || !isPlainTextElement(lastTag)) {
       let textEnd = html.indexOf('<')
       if (textEnd === 0) {
@@ -69,6 +70,7 @@ export function parseHTML (html, options) {
           const commentEnd = html.indexOf('-->')
 
           if (commentEnd >= 0) {
+            // 注释节点的钩子函数通过选项来配置， shouldKeepComment 为true才触发，否则 只截取模板
             if (options.shouldKeepComment) {
               options.comment(html.substring(4, commentEnd), index, index + commentEnd + 3)
             }
@@ -124,14 +126,16 @@ export function parseHTML (html, options) {
           !conditionalComment.test(rest)
         ) {
           // < in plain text, be forgiving and treat it as text
+          // 处理 <1<2</div> 这种文本内容
           next = rest.indexOf('<', 1)
           if (next < 0) break
           textEnd += next
+          // 循环截取 ，当</ div>时 推出循环
           rest = html.slice(textEnd)
         }
         text = html.substring(0, textEnd)
       }
-
+      // 如果template中找不到 '<' 说明整个模板 都是文本
       if (textEnd < 0) {
         text = html
       }

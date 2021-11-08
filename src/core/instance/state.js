@@ -183,6 +183,7 @@ function initComputed (vm: Component, computed: Object) {
       )
     }
 
+    // 不是ssr
     if (!isSSR) {
       // create internal watcher for the computed property.
       watchers[key] = new Watcher(
@@ -216,6 +217,7 @@ export function defineComputed (
   userDef: Object | Function
 ) {
   const shouldCache = !isServerRendering()
+  // 定义getter 函数，没有设置setter ，所以computed属性不能赋值
   if (typeof userDef === 'function') {
     sharedPropertyDefinition.get = shouldCache
       ? createComputedGetter(key)
@@ -242,12 +244,16 @@ export function defineComputed (
 }
 
 function createComputedGetter (key) {
+  // 闭包缓存
   return function computedGetter () {
     const watcher = this._computedWatchers && this._computedWatchers[key]
     if (watcher) {
       if (watcher.dirty) {
+        // 执行过程中，该计算属性用到的 状态Dep实例 收集了 computedWather，同时将Dep实例保存到了computedWatcher 中的 deps 中
         watcher.evaluate()
       }
+      // 只有依赖收集过程中 才会出现 Dep.target(渲染Wather执行过程中)
+      // 此时 Dep.target 是渲染wather，收集渲染Wather依赖
       if (Dep.target) {
         watcher.depend()
       }
